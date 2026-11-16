@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "tests-on-save",
+      "description": "Runs node scripts/hooks/tests-on-save.mjs after the agent saves a .ts or .mjs file. For files under skeleton/, apps/<name>/, tests/ or scripts/ it runs the related Vitest tests with fast property tests (WRAITH_PBT_RUNS=20) and sends failures back to the agent. It blocks nothing; a save cannot be blocked.",
+      "trigger": "PostFileSave",
+      "matcher": "\\.(ts|mjs)$",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/tests-on-save.mjs"
+      },
+      "timeout": 60,
+      "enabled": true
+    }
+  ]
+}

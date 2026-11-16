@@ -15,4 +15,19 @@ export default defineConfig([
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     extends: [js.configs.recommended, tseslint.configs.recommended],
   },
+  {
+    // Hook scripts are plain Node ESM. List the Node globals they use by name
+    // (no extra dependency).
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        Buffer: 'readonly',
+        URL: 'readonly',
+        clearTimeout: 'readonly',
+        console: 'readonly',
+        process: 'readonly',
+        setTimeout: 'readonly',
+      },
+    },
+  },
 ]);

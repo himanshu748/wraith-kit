@@ -12,7 +12,9 @@
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:fast": "WRAITH_PBT_RUNS=20 vitest run"
+    "test:fast": "WRAITH_PBT_RUNS=20 vitest run",
+    "guard": "echo '{\"hook_event_name\":\"PreToolUse\",\"tool_name\":\"execute_bash\",\"tool_input\":{\"command\":\"git commit -m guard-run-by-hand\"}}' | node scripts/hooks/commit-guard.mjs",
+    "spec:trace": "node scripts/hooks/spec-trace.mjs --strict"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

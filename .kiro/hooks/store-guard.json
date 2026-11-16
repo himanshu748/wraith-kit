@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "store-guard",
+      "description": "Runs node scripts/hooks/store-guard.mjs before every file write tool call. Blocks (exit 2) a write whose target path is inside .wraith/ (the local Wraith action store and audit log), so actions change only through the approval UI. If the payload has no path field it recognises, it warns and lets the write go ahead (fails open).",
+      "trigger": "PreToolUse",
+      "matcher": "write",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/store-guard.mjs"
+      },
+      "timeout": 10,
+      "enabled": true
+    }
+  ]
+}

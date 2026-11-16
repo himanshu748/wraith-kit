@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "spec-trace",
+      "description": "Runs node scripts/hooks/spec-trace.mjs after the agent saves markdown under .kiro/specs/. Reports duplicate or malformed requirement IDs, criteria not in EARS form, IDs with no design reference or task, and references to IDs that do not exist. It blocks nothing; npm run spec:trace runs the same check in strict mode.",
+      "trigger": "PostFileSave",
+      "matcher": "\\.kiro/specs/.*\\.md$",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/spec-trace.mjs"
+      },
+      "timeout": 30,
+      "enabled": true
+    }
+  ]
+}

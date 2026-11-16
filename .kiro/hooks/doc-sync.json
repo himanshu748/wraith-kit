@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "doc-sync",
+      "description": "Agent prompt after a spec task finishes (no script). Asks the agent to update KIRO_USAGE.md and the README sections the task affected with what actually happened. It blocks nothing and makes no commit.",
+      "trigger": "PostTaskExec",
+      "action": {
+        "type": "agent",
+        "prompt": "A spec task has just finished. Update the docs before the task's commit: (1) In KIRO_USAGE.md, add or update the task log row and every section this task affected (Kiro surfaces, custom agents, hooks, specs, steering, MCP, property-based testing, powers, experiments). Record only what happened in this task: name the commands you ran and their real results (exit codes and test counts as printed). Write 'not yet' for anything not done and 'to confirm' for anything not checked in official docs. (2) Update the README.md sections this task changed (for example How to run, How to test, Repo layout, Pre-existing work). Every new npm package must appear in backticks in the README '## Pre-existing work' table with its version and license. (3) Tick the task's checkbox in tasks.md only if the task is implemented and its tests pass. Rules: plain English, no em dashes (U+2014), no invented numbers, users or results. Do not commit: the task's own commit includes these edits."
+      },
+      "enabled": true
+    }
+  ]
+}

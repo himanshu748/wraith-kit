@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "todo-afterlife-precommit",
+      "description": "Runs node scripts/hooks/todo-afterlife-precommit.mjs before every shell tool call and acts only on git commits. Today it reports that TODO Afterlife is not built yet; the todo-afterlife build task makes it run TODO Afterlife over the staged diff (deterministic, no LLM, no network). It blocks nothing and fails open: any internal error exits 0 with a warning.",
+      "trigger": "PreToolUse",
+      "matcher": "shell",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/todo-afterlife-precommit.mjs"
+      },
+      "timeout": 30,
+      "enabled": true
+    }
+  ]
+}

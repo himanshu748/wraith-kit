@@ -1,0 +1,69 @@
+{
+  "description": "Checks that scripts/hooks/commit-guard.mjs runs before every agent commit (PLAN.md section 10.4, 'Guard bootstrap'). A required check that fails, or whose tool is missing, blocks the commit. A check that is not required yet is reported as skipped until its tool exists. The task that adds a tool sets its check to required in the same commit.",
+  "checks": [
+    {
+      "id": "kiro-not-ignored",
+      "description": ".gitignore has no line that mentions kiro, and git check-ignore does not ignore .kiro",
+      "required": true
+    },
+    {
+      "id": "license-present",
+      "description": "A LICENSE file is in the index",
+      "required": true
+    },
+    {
+      "id": "secret-scan",
+      "description": "No GitHub token, AWS access key ID or secret key assignment, PEM private key or Modal token on an added line of the staged diff",
+      "required": true
+    },
+    {
+      "id": "env-files",
+      "description": "No staged .env or .env.* file other than .env.example",
+      "required": true
+    },
+    {
+      "id": "deps-in-readme",
+      "description": "Every dependency in every staged package.json appears in backticks in the README section '## Pre-existing work'",
+      "required": true
+    },
+    {
+      "id": "no-em-dash",
+      "description": "No staged text file contains U+2014 (em dash)",
+      "required": true
+    },
+    {
+      "id": "typecheck",
+      "description": "npm run typecheck exits 0",
+      "required": true,
+      "tool": "node_modules/.bin/tsc",
+      "command": ["npm", "run", "--silent", "typecheck"]
+    },
+    {
+      "id": "lint",
+      "description": "npm run lint exits 0",
+      "required": true,
+      "tool": "node_modules/.bin/eslint",
+      "command": ["npm", "run", "--silent", "lint"]
+    },
+    {
+      "id": "fast-tests",
+      "description": "npm run test:fast (vitest run with WRAITH_PBT_RUNS=20) exits 0",
+      "required": true,
+      "tool": "node_modules/.bin/vitest",
+      "command": ["npm", "run", "--silent", "test:fast"]
+    },
+    {
+      "id": "core-integrity",
+      "description": "The core-integrity test passes: both apps import the same unmodified skeleton core",
+      "required": false,
+      "tool": "tests/core-integrity.test.ts",
+      "command": ["npx", "vitest", "run", "tests/core-integrity.test.ts"]
+    },
+    {
+      "id": "fixture-demo-label",
+      "description": "Every staged text file under apps/<name>/fixtures/ contains the label DEMO",
+      "required": false,
+      "tool": "app fixtures (apps/<name>/fixtures/)"
+    }
+  ]
+}

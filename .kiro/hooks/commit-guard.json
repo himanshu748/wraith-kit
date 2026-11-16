@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "commit-guard",
+      "description": "Runs node scripts/hooks/commit-guard.mjs before every shell tool call. Other commands pass through. For a git commit it blocks (exit 2) commits that use -a/--all, -i/--include, -o/--only, -p/--patch, --interactive, --pathspec-from-file, pathspecs or a git add chained before the commit, then runs every check in scripts/guard-checks.json on the staged index (.kiro not ignored, LICENSE present, secret scan, no .env files, dependencies listed in README 'Pre-existing work', no em dashes, typecheck, lint, fast tests) and blocks the commit if a check fails. It fails closed: an internal error blocks the commit.",
+      "trigger": "PreToolUse",
+      "matcher": "shell",
+      "action": {
+        "type": "command",
+        "command": "node scripts/hooks/commit-guard.mjs"
+      },
+      "timeout": 180,
+      "enabled": true
+    }
+  ]
+}

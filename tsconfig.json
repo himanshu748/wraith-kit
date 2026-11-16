@@ -11,5 +11,5 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["tests", "*.ts", "eslint.config.js"]
+  "include": ["scripts", "tests", "*.ts", "eslint.config.js"]
 }
