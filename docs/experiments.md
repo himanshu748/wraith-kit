@@ -2,7 +2,7 @@
 
 This file records the experiments from [PLAN.md](../PLAN.md) section 10.8: questions the Kiro docs leave open for this setup (Kiro CLI driven over ACP by T3 Code). Each section gives the question, the method, the raw evidence, the result and what changed in the hook scripts because of it. Failures are recorded too.
 
-All experiments so far ran on Mon 16 Nov 2026 (IST), in the hooks task.
+All experiments so far ran on Mon 16 Nov 2026 (IST): E2, E3, E4, E5, E10 and E11 in the hooks task, and E7 in the steering and agents task.
 
 ## Setup used for E2, E3, E4, E5 and E10
 
@@ -138,11 +138,38 @@ The first payload of each kind is kept, with `<lab>` written as `/path/to/worksp
 
 ## E7: Does `auto` steering inclusion trigger in CLI V3?
 
-- **Result:** not run yet: needs a Kiro session started in `wraith-kit/`, or the steering task's headless run.
+- **Question:** does `.kiro/steering/skeleton-authoring.md` (`inclusion: auto`, with a `name` and a `description`) load in CLI V3 when someone asks to build a new Wraith app?
+- **Method:** one headless run from the `wraith-kit/` root, which is its own git repository and so the session's workspace root (the hooks task showed that a V3 headless run uses the nearest git repository). The working tree held the five steering files, both agents and `.kiro/settings/mcp.json`. Command, from 22:36:31 to 22:36:45, exit 0, STDIN from `/dev/null`, with a 290 s kill timer:
+
+  ```sh
+  kiro-cli chat --agent-engine v3 --no-interactive --trust-workspace --trust-tools=fs_read \
+    --output-format stream-json "<prompt>"
+  ```
+
+  The prompt was the planned one plus two sentences, so that the answer describes the context and not a file read from disk: "I want to build a new Wraith app. Before answering, list the names of the steering files you have loaded. List only steering files that are already in your context; do not read files from disk to answer that part. For each one, say whether you have its full text or only its name and description."
+- **Run facts:** `"engine": "v3"`; session `sess_b19bd475-92b6-4078-83b5-cfc867083219`; the turn took 7224 ms and 0.1468 credits (from the turn summary); stderr had one `GenerateAssistantResponseCommand done` line. The agent called no tool, so no hook ran.
+- **Evidence from the ACP stream** (Kiro's own events, stronger than the model's answer):
+  - A `session_info_update` of kind `steering_inclusion` listed exactly three files: `.kiro/steering/product.md`, `structure.md` and `tech.md`.
+  - The context breakdown listed the same three files with their full text (1101, 1711 and 1112 tokens, `"progressivelyLoaded": false`). After the prompt it also listed `.kiro/steering/skeleton-authoring.md` with 0 tokens and `"progressivelyLoaded": true`, next to nine user-level skills from `~/.kiro/skills/` (outside this repo) shown the same way. Every entry had `"matched": true`, the unrelated skills included, so that field does not show a description match.
+  - `wraith-domain.md` (`inclusion: fileMatch`) was not listed. No skeleton or app source file was open or touched, so that is expected.
+  - The available commands included `skeleton-authoring` (type `steering`), the bundled agents `general-task-execution` and `context-gatherer`, and the two project agents `app-smith` and `skeleton-warden` (type `custom-agent`).
+- **The agent's answer** (the model's self-report, weaker evidence, which matched the stream):
+
+  > - **tech**: full text. It came in as a workspace rule.
+  > - **structure**: full text. It came in as a workspace rule.
+  > - **product**: full text. It came in as a workspace rule.
+  > - **skeleton-authoring**: name and description only. It's listed as an auto-inclusion steering file ("How to build a new Wraith Kit app (app number 3) from the skeleton's extension points only"). I haven't loaded its body yet.
+  >
+  > `.kiro/steering/` on disk may also hold `wraith-domain.md`. It isn't in my context, so I can't say anything about it.
+  >
+  > Your request matches `skeleton-authoring`, so I should activate it before we plan the app. Do you want me to do that now?
+
+- **Result:** in CLI 3.3.0 on the V3 engine, the three `always` files load in full. The `auto` file is recognised and offered the way skills are: its name and description are in the context, its body is loaded on demand, and it is also a slash command (`/skeleton-authoring`). In this one-turn run the body was not loaded; the agent offered to activate it. The prompt's "do not read files" sentence may have held it back, so whether the agent loads the body by itself in a normal session is not shown. This matches the [Steering](https://kiro.dev/docs/steering) page: auto inclusion "works similarly to skills".
+- **Follow-up:** `skeleton-authoring.md` stays `auto`. Switching to `manual` would remove the description-based offer and keep only the slash command and `#skeleton-authoring`, which `auto` files have anyway. App authors can type `/skeleton-authoring` to load it for sure, and the `app-smith` agent lists it in its `resources`.
 
 ## E8: Selecting a custom agent through ACP, and project agents as sub-agents
 
-- **Result:** not run yet: needs a Kiro session started in `wraith-kit/`, or the agents task's headless run.
+- **Result:** not run yet: needs a Kiro session started in `wraith-kit/`. Related evidence: in the E7 run (headless, V3), both project agents from `.kiro/agents/` appeared in the session's available commands as type `custom-agent`, next to the bundled `general-task-execution` and `context-gatherer`. `kiro-cli agent list` run in `wraith-kit/` lists both as `Workspace (v3 format)`. Selecting one through ACP `session/set_mode`, and running one as a sub-agent, were not tested.
 
 ## E9: Do `@wraith/<tool>` matchers match `mcp_wraith_<tool>` IDs?
 

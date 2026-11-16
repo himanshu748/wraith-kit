@@ -17,7 +17,7 @@ Wraith Kit is planned as a small TypeScript skeleton for agents that follow one 
 ## Status
 
 - Phase 1 (spec) started on 16 Nov 2026, after the plan was approved.
-- Nothing is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license, the TypeScript toolchain, and six Kiro agent hooks (`.kiro/hooks/`) with their scripts (`scripts/hooks/`) and tests. Hook experiments are recorded in [docs/experiments.md](docs/experiments.md). The skeleton and both apps come after their specs.
+- Nothing is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license, the TypeScript toolchain, six Kiro agent hooks (`.kiro/hooks/`) with their scripts (`scripts/hooks/`) and tests, five steering files (`.kiro/steering/`), two custom agents (`.kiro/agents/`) and the MCP config (`.kiro/settings/mcp.json`). Kiro experiments are recorded in [docs/experiments.md](docs/experiments.md). The skeleton and both apps come after their specs.
 - The full plan, with dates and the order of work, is in [PLAN.md](PLAN.md).
 
 ## Working app URLs
@@ -45,13 +45,13 @@ npm run guard       # the commit guard by hand: every check in scripts/guard-che
 npm run spec:trace  # requirement ID traceability for .kiro/specs/ (strict: exits 1 on any error)
 ```
 
-Today the tests cover the test helper `pbtRuns()` in `tests/pbt.ts` and the Kiro hook scripts in `scripts/hooks/` (`tests/hooks/`): commit detection, with fast-check properties, the guard checks, the spec traceability check, and each hook script run in temporary git repos.
+Today the tests cover the test helper `pbtRuns()` in `tests/pbt.ts`, the Kiro hook scripts in `scripts/hooks/` (`tests/hooks/`): commit detection, with fast-check properties, the guard checks, the spec traceability check, and each hook script run in temporary git repos, and the Kiro config files (`tests/kiro/`): steering front matter and file references, the spec ID examples in `structure.md`, the agents' fields and permission rules, and the MCP config.
 
 `npm run guard` pipes a synthetic `git commit` hook event into `scripts/hooks/commit-guard.mjs`, the same script the `commit-guard` Kiro hook runs. It prints one line per check (pass, fail with the reason, or skipped) and exits 2 if a check fails. Stage your changes first: it checks what is staged. Until a Kiro session starts in this folder, the guard is run this way before every commit (see [KIRO_USAGE.md](KIRO_USAGE.md)).
 
 ## Repo layout
 
-Planned layout (PLAN.md section 3). Today `.kiro/hooks/`, `scripts/` (hook scripts and `guard-checks.json`), `tests/`, `docs/experiments.md` and the root files exist.
+Planned layout (PLAN.md section 3). Today `.kiro/hooks/`, `.kiro/steering/`, `.kiro/agents/`, `.kiro/settings/`, `scripts/` (hook scripts and `guard-checks.json`), `tests/`, `docs/experiments.md`, the stub of `docs/make-your-own-app-in-15-min.md` and the root files exist.
 
 ```text
 wraith-kit/
@@ -62,7 +62,7 @@ wraith-kit/
                 (each: requirements.md, design.md, tasks.md)
     hooks/      tests-on-save.json, commit-guard.json, todo-afterlife-precommit.json,
                 doc-sync.json, spec-trace.json, store-guard.json
-    agents/     skeleton-warden.md, app-smith.md
+    agents/     skeleton-warden.json, app-smith.json
     settings/   mcp.json
   skeleton/     the template: package.json (exports), src/{core,node,aws,llm,ui,mcp,testing},
                 template/ (starter files for app #3), test/
@@ -105,8 +105,10 @@ Other pre-existing work and tools:
 | The MIT License text | standard text | n/a | `LICENSE`, copied from [choosealicense.com](https://choosealicense.com/licenses/mit/) with the year and holder filled in |
 | Kiro CLI, driven over ACP by T3 Code | 3.3.0 (from `kiro-cli --version`) | to confirm | The AI agent that writes this repo (see [KIRO_USAGE.md](KIRO_USAGE.md)) |
 | T3 Code | to confirm | to confirm | The app that drives the Kiro CLI session |
+| uv and uvx | 0.8.2 (from `uvx --version`, installed with Homebrew) | MIT OR Apache-2.0 (from PyPI's `uv` package metadata) | Running the AWS Documentation MCP server with `uvx`; uvx ran it on Python 3.12.11 |
+| `awslabs.aws-documentation-mcp-server` (AWS Documentation MCP server) | 1.2.5 (pinned in `.kiro/settings/mcp.json`) | Apache-2.0 (from PyPI) | The `aws-docs` MCP server Kiro uses to read AWS documentation. uvx installs it and its Python dependencies (45 packages on 16 Nov 2026) into uv's cache, outside this repo |
 
-More tools (uv and uvx, cfn-lint, the AWS SAM CLI, MCP servers) are listed here when they are first used.
+More tools (cfn-lint, the AWS SAM CLI, other MCP servers) are listed here when they are first used.
 
 ## License
 
