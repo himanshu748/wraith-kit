@@ -32,7 +32,13 @@ import {
 /** The default list, next to this folder: scripts/guard-checks.json. */
 export const DEFAULT_CHECKS_FILE = new URL('../../guard-checks.json', import.meta.url);
 
-const COMMAND_TIMEOUT_MS = 150_000;
+/**
+ * Time budget for the command checks. The commit-guard hook has a 180 s
+ * timeout (.kiro/hooks/commit-guard.json), and a timed-out Pre Tool Use hook
+ * lets the tool call run (E5, docs/experiments.md), so the guard stops at
+ * 150 s and blocks instead.
+ */
+export const DEFAULT_BUDGET_MS = 150_000;
 const OUTPUT_TAIL_LINES = 15;
 const MAX_LISTED = 10;
 
@@ -297,18 +303,28 @@ function tail(text) {
 }
 
 /**
+ * Runs one command check with whatever time is left before `deadline`.
+ *
  * @param {string[]} command
  * @param {string} root
+ * @param {number} deadline Epoch milliseconds.
  * @returns {string | null}
  */
-function runCommand(command, root) {
+function runCommand(command, root, deadline) {
+  const remaining = deadline - Date.now();
+  if (remaining <= 0) {
+    return `${command.join(' ')} not run: the guard's time budget is used up`;
+  }
   const [program, ...args] = command;
   const result = spawnSync(program, args, {
     cwd: root,
     encoding: 'utf8',
-    timeout: COMMAND_TIMEOUT_MS,
+    timeout: remaining,
     maxBuffer: 64 * 1024 * 1024,
   });
+  if (result.error && /** @type {NodeJS.ErrnoException} */ (result.error).code === 'ETIMEDOUT') {
+    return `${command.join(' ')} timed out after ${Math.round(remaining / 1000)} s (the guard's time budget)`;
+  }
   if (result.error) {
     return `${command.join(' ')} could not run: ${result.error.message}`;
   }
@@ -323,12 +339,20 @@ function runCommand(command, root) {
 /**
  * Runs every check in order. A check never throws: an error becomes a failure.
  *
+ * Options: `staticOnly` skips checks that run a command (tests use it).
+ * `deadline` (epoch milliseconds, default 150 s from now) bounds the command
+ * checks: one still running at the deadline is stopped and fails, and later
+ * ones fail without running. Experiment E5 showed that a Pre Tool Use hook
+ * that hits its Kiro timeout lets the tool call run, so the guard must give up
+ * and block before Kiro's timeout does.
+ *
  * @param {GuardCheck[]} checks
  * @param {string} root
- * @param {{ staticOnly?: boolean }} [options] `staticOnly` skips checks that run a command (tests use it).
+ * @param {{ staticOnly?: boolean, deadline?: number }} [options]
  * @returns {CheckResult[]}
  */
 export function runGuardChecks(checks, root, options = {}) {
+  const deadline = options.deadline ?? Date.now() + DEFAULT_BUDGET_MS;
   return checks.map((check) => {
     try {
       const exists = toolExists(check, root);
@@ -343,7 +367,7 @@ export function runGuardChecks(checks, root, options = {}) {
         return { id: check.id, status: 'fail', reason: `${tool} is not set up (a required check cannot be skipped)` };
       }
       if (check.command !== undefined) {
-        const reason = runCommand(check.command, root);
+        const reason = runCommand(check.command, root, deadline);
         return reason === null ? { id: check.id, status: 'pass' } : { id: check.id, status: 'fail', reason };
       }
       const builtIn = BUILT_IN[check.id];

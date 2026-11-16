@@ -5,9 +5,16 @@
 // command hooks get the event as JSON on STDIN with `hook_event_name`, `cwd`,
 // `session_id`, and for tool triggers `tool_name` and `tool_input`. The docs show
 // `tool_input.path` for `read_file`, but they do not name the field that holds a
-// shell command, nor the fields of a PostFileSave event. Experiments E2 and E4
-// (docs/experiments.md) record what CLI V3 actually sends. Until then the helpers
-// below check several candidate field names.
+// shell command, nor the fields of a PostFileSave event.
+//
+// Experiments E2 and E4 (docs/experiments.md, Kiro CLI 3.3.0, V3 engine,
+// 16 Nov 2026) recorded what CLI V3 sends:
+// - shell: tool_name `execute_bash`, command in `tool_input.command`;
+// - writes: tool_name `fs_write` or `str_replace`, target in `tool_input.path`
+//   (absolute);
+// - PostFileCreate and PostFileSave: top-level `file_path` (absolute).
+// Those fields are checked first. The other candidates stay as a fallback for
+// other surfaces and versions, which were not tested.
 
 /** @typedef {Record<string, unknown>} HookEvent */
 
@@ -146,8 +153,8 @@ export function targetPathsOf(event) {
 }
 
 /**
- * Paths named by a file event such as PostFileSave: top-level fields first,
- * then `tool_input`.
+ * Paths named by a file event such as PostFileSave: top-level fields first
+ * (CLI V3 sends `file_path`, E4), then `tool_input`.
  *
  * @param {HookEvent | null} event
  * @returns {string[]}

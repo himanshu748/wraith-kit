@@ -1,0 +1,6 @@
+{
+  "session_id": "sess_2164ea2f-62d9-4645-8954-3f302437aabd",
+  "hook_event_name": "PostFileSave",
+  "cwd": "/path/to/workspace",
+  "file_path": "/path/to/workspace/notes/sample.ts"
+}

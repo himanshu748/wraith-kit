@@ -1,0 +1,13 @@
+{
+  "session_id": "sess_2164ea2f-62d9-4645-8954-3f302437aabd",
+  "hook_event_name": "PreToolUse",
+  "cwd": "/path/to/workspace",
+  "tool_name": "execute_bash",
+  "tool_input": {
+    "command": "echo wraith-e2",
+    "description": "Run first echo command",
+    "cwd": null,
+    "run_in_background": false,
+    "timeout": null
+  }
+}

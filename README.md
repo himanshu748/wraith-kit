@@ -17,7 +17,7 @@ Wraith Kit is planned as a small TypeScript skeleton for agents that follow one 
 ## Status
 
 - Phase 1 (spec) started on 16 Nov 2026, after the plan was approved.
-- Nothing is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license and the TypeScript toolchain. The skeleton and both apps come after their specs.
+- Nothing is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license, the TypeScript toolchain, and six Kiro agent hooks (`.kiro/hooks/`) with their scripts (`scripts/hooks/`) and tests. Hook experiments are recorded in [docs/experiments.md](docs/experiments.md). The skeleton and both apps come after their specs.
 - The full plan, with dates and the order of work, is in [PLAN.md](PLAN.md).
 
 ## Working app URLs
@@ -40,14 +40,18 @@ npm install
 npm run typecheck   # tsc, strict, no output files
 npm run lint        # ESLint with the typescript-eslint recommended rules
 npm test            # Vitest; property tests use fast-check's default run count
-npm run test:fast   # the same tests with WRAITH_PBT_RUNS=20 (the fast mode hooks will use)
+npm run test:fast   # the same tests with WRAITH_PBT_RUNS=20 (the fast mode hooks use)
+npm run guard       # the commit guard by hand: every check in scripts/guard-checks.json on the staged index
+npm run spec:trace  # requirement ID traceability for .kiro/specs/ (strict: exits 1 on any error)
 ```
 
-Today the tests cover only the test helper `pbtRuns()` in `tests/pbt.ts`, which reads `WRAITH_PBT_RUNS` for property tests.
+Today the tests cover the test helper `pbtRuns()` in `tests/pbt.ts` and the Kiro hook scripts in `scripts/hooks/` (`tests/hooks/`): commit detection, with fast-check properties, the guard checks, the spec traceability check, and each hook script run in temporary git repos.
+
+`npm run guard` pipes a synthetic `git commit` hook event into `scripts/hooks/commit-guard.mjs`, the same script the `commit-guard` Kiro hook runs. It prints one line per check (pass, fail with the reason, or skipped) and exits 2 if a check fails. Stage your changes first: it checks what is staged. Until a Kiro session starts in this folder, the guard is run this way before every commit (see [KIRO_USAGE.md](KIRO_USAGE.md)).
 
 ## Repo layout
 
-Planned layout (PLAN.md section 3). Today only `tests/` and the root files exist.
+Planned layout (PLAN.md section 3). Today `.kiro/hooks/`, `scripts/` (hook scripts and `guard-checks.json`), `tests/`, `docs/experiments.md` and the root files exist.
 
 ```text
 wraith-kit/

@@ -14,7 +14,10 @@
 // It fails closed: an internal error, or an event it cannot read, exits 2.
 // The modules are imported inside the try block so that a missing or broken
 // module also ends in exit 2 (the hook types page says other non-zero codes
-// only warn and let the tool run).
+// only warn and let the tool run). A Kiro timeout is the one case it cannot
+// fail closed: E5 showed that a timed-out Pre Tool Use hook lets the tool call
+// run. So the command checks stop at a 150 s budget (lib/guard.mjs), below the
+// hook's 180 s timeout, and the guard blocks when the budget runs out.
 //
 // `--static-only` skips the checks that run commands (typecheck, lint, tests).
 // Only the tests in tests/hooks/ pass it; the hook never does.
@@ -46,8 +49,9 @@ try {
         'If this keeps happening, record the payload (docs/experiments.md, E2) and fix scripts/hooks/lib/event.mjs.',
     );
   } else {
-    // The documented field for the command is not known yet (E2); when no
-    // candidate field matches, every string in tool_input is checked.
+    // CLI V3 sends the command in tool_input.command (E2). When no candidate
+    // field matches (another surface or version), every string in tool_input
+    // is checked instead.
     const command = shellCommandOf(event);
     const candidates = command !== null ? [command] : stringsIn(event.tool_input);
     const detections = candidates.map((text) => detectCommit(text));

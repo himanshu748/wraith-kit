@@ -7,7 +7,8 @@
 //
 // It fails open: when the payload has no path field it recognises, or on any
 // internal error, it prints a warning and exits 0. It guards against mistakes,
-// not attacks, and the payload field names are still to confirm (E2).
+// not attacks. CLI V3 sends the target in tool_input.path for fs_write and
+// str_replace (E2); other tools and surfaces were not tested.
 // Paths are compared after path.resolve; symbolic links are not followed.
 
 const NAME = 'store-guard';

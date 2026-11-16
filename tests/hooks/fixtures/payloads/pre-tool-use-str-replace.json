@@ -1,0 +1,12 @@
+{
+  "session_id": "sess_2164ea2f-62d9-4645-8954-3f302437aabd",
+  "hook_event_name": "PreToolUse",
+  "cwd": "/path/to/workspace",
+  "tool_name": "str_replace",
+  "tool_input": {
+    "path": "/path/to/workspace/notes/sample.ts",
+    "oldStr": "export const x = 1;",
+    "newStr": "export const x = 2;",
+    "replace_all": false
+  }
+}

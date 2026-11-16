@@ -1,15 +1,20 @@
 // @ts-check
 // Kiro hook: tests-on-save (.kiro/hooks/tests-on-save.json, PostFileSave).
 //
-// Gets the saved path from its arguments (for a `{{filePath}}` template, if
-// the CLI expands it: E4) or from the event on STDIN. Acts only on .ts and
+// Gets the saved path from the event on STDIN (CLI V3 sends a top-level
+// `file_path`, E4) or from its arguments. E4 showed that CLI 3.3.0 does not
+// expand the `{{filePath}}` template from the IDE 1.0 page (the script got the
+// literal text), so the hook passes no argument and a literal template is
+// ignored. Acts only on .ts and
 // .mjs files under skeleton/, apps/<name>/, tests/ or scripts/. Runs
 // `npx vitest related --run <file>` with WRAITH_PBT_RUNS=20 (fast property
 // tests). On a test failure it exits 1 with the tail of the output on stderr,
 // which the docs say is sent to the agent. A save cannot be blocked, so the
 // exit code only reports.
 //
-// File triggers fire only on agent edits, not on saves made by hand.
+// File triggers fire only on agent edits, not on saves made by hand. In E4,
+// creating a file fired PostFileSave as well as PostFileCreate, so this hook
+// also runs for new files.
 
 const NAME = 'tests-on-save';
 const TAIL_LINES = 30;
