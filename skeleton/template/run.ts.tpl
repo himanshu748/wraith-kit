@@ -1,0 +1,16 @@
+import { resolve } from 'node:path';
+import { Engine } from '@wraith-kit/skeleton/core';
+import { FileStore, privateSecret, startLocalServer } from '@wraith-kit/skeleton/node';
+import { app,demoEvent } from './src/index.js';
+const dataDir=process.env.WRAITH_DATA_DIR??resolve('.wraith',app.id);
+const auditKey=(await privateSecret(`${app.id}-audit`,process.env.WRAITH_CONFIG_DIR)).value;
+const sessionKey=(await privateSecret(`${app.id}-session`,process.env.WRAITH_CONFIG_DIR)).value;
+const store=new FileStore(dataDir);
+const engine=new Engine(app,store,{auditKey,advisorOff:true});
+await engine.ingest(demoEvent());
+const server=await startLocalServer({app,engine,store,dataDir,sessionKey,demo:true,demoEvents:()=>[demoEvent()],configDir:process.env.WRAITH_CONFIG_DIR,port:Number(process.env.PORT??4320),openBrowser:process.env.WRAITH_OPEN_BROWSER!=='0'});
+await server.tick();
+console.log(`${app.theme?.name}: ${server.origin}`);
+console.log(`Private sign-in link: ${server.loginFile}`);
+console.log('DEMO data. Approve the task to create a downloadable local file.');
+for(const signal of ['SIGINT','SIGTERM'] as const)process.once(signal,()=>{void server.close().then(()=>process.exit(0));});

@@ -1,0 +1,7 @@
+{
+  "description": "DEMO: fictional Hollowmere notice pages on loopback only",
+  "sources": [
+    {"id":"hollowmere-board","url":"http://127.0.0.1:4319/fixtures/demo.html","format":"html","timezone":"Asia/Kolkata","intervalMs":60000,"demo":true},
+    {"id":"hollowmere-department","url":"http://127.0.0.1:4319/fixtures/department-demo.html","format":"html","timezone":"Asia/Kolkata","intervalMs":60000,"demo":true}
+  ]
+}

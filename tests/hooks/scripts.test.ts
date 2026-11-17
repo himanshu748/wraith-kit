@@ -51,8 +51,8 @@ describe('commit-guard.mjs', () => {
     }
     expect(result.stdout).toContain('kiro-not-ignored: pass');
     expect(result.stdout).toContain('typecheck: skipped: --static-only');
-    expect(result.stdout).toContain('core-integrity: skipped: tests/core-integrity.test.ts not set up yet');
-    expect(result.stdout).toContain('fixture-demo-label: skipped:');
+    expect(result.stdout).toContain('core-integrity: skipped: --static-only');
+    expect(result.stdout).toContain('fixture-demo-label: pass');
   });
 
   it('blocks when the tool of a required check is missing', { timeout: TIMEOUT }, () => {
@@ -61,8 +61,8 @@ describe('commit-guard.mjs', () => {
     const result = runScript('commit-guard.mjs', shellEvent('git commit -m test'), { cwd: repo });
     expect(result.status).toBe(2);
     expect(result.stderr).toContain('typecheck: fail: node_modules/.bin/tsc is not set up (a required check cannot be skipped)');
-    expect(result.stderr).toContain('core-integrity: skipped: tests/core-integrity.test.ts not set up yet');
-    expect(result.stderr).toMatch(/commit-guard: blocked: failed checks: typecheck, lint, fast-tests\./);
+    expect(result.stderr).toContain('core-integrity: fail: tests/core-integrity.test.ts is not set up');
+    expect(result.stderr).toMatch(/commit-guard: blocked: failed checks: typecheck, lint, fast-tests, core-integrity\./);
   });
 
   it('blocks a staged file with a fake GitHub token', { timeout: TIMEOUT }, () => {
@@ -172,10 +172,14 @@ describe('commit-guard.mjs', () => {
 });
 
 describe('todo-afterlife-precommit.mjs', () => {
-  it('prints the skipped message for a commit and exits 0', () => {
-    const result = runScript('todo-afterlife-precommit.mjs', shellEvent('git -C . commit -m x'));
+  it('runs the advisory app check for a commit and exits 0', () => {
+    const repo = tempRepo();
+    writeFile(repo, 'sample.ts', '// TODO: fix this later\n');
+    git(repo, 'add', 'sample.ts');
+    const result = runScript('todo-afterlife-precommit.mjs', shellEvent('git commit -m x'), { cwd: repo });
     expect(result.status).toBe(0);
-    expect(result.stdout).toBe('todo-afterlife-precommit: skipped: TODO Afterlife is not built yet\n');
+    expect(result.stdout).toContain('1 comment(s), 1 vague');
+    expect(result.stdout).toContain('no files changed');
   });
 
   it('stays silent for other commands and for unreadable events', () => {

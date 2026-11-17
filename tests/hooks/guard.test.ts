@@ -21,8 +21,8 @@ describe('loadGuardChecks', () => {
       typecheck: true,
       lint: true,
       'fast-tests': true,
-      'core-integrity': false,
-      'fixture-demo-label': false,
+      'core-integrity': true,
+      'fixture-demo-label': true,
     });
     expect(checks.every((check) => check.description.length > 0)).toBe(true);
   });

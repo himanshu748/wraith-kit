@@ -14,16 +14,43 @@
     "test": "vitest run",
     "test:fast": "WRAITH_PBT_RUNS=20 vitest run",
     "guard": "echo '{\"hook_event_name\":\"PreToolUse\",\"tool_name\":\"execute_bash\",\"tool_input\":{\"command\":\"git commit -m guard-run-by-hand\"}}' | node scripts/hooks/commit-guard.mjs",
-    "spec:trace": "node scripts/hooks/spec-trace.mjs --strict"
+    "spec:trace": "node scripts/hooks/spec-trace.mjs --strict",
+    "dev:todo": "tsx scripts/run-app.ts todo-afterlife",
+    "dev:notices": "tsx scripts/run-app.ts notice-ghoul",
+    "demo:todo": "tsx scripts/replay.ts todo-afterlife",
+    "demo:notices": "tsx scripts/replay.ts notice-ghoul",
+    "build": "tsx scripts/build.ts",
+    "core:budget": "node scripts/core-budget.mjs",
+    "new-app": "tsx scripts/new-app.ts",
+    "test:e2e": "playwright test",
+    "mcp": "tsx scripts/mcp.ts",
+    "audit": "tsx scripts/audit.ts"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.65.1",
     "@types/node": "^22.20.5",
+    "esbuild": "0.28.2",
     "eslint": "^10.15.0",
     "fast-check": "^4.10.2",
+    "ical.js": "2.2.1",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2",
     "vitest": "^5.1.0"
+  },
+  "workspaces": [
+    "skeleton",
+    "apps/*"
+  ],
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.1170.0",
+    "@aws-sdk/client-lambda": "3.1170.0",
+    "@aws-sdk/client-ssm": "3.1170.0",
+    "@aws-sdk/lib-dynamodb": "3.1170.0",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "cheerio": "1.2.0",
+    "zod": "4.6.7"
   }
 }

@@ -1,0 +1,11 @@
+import { startLocalServer } from '@wraith-kit/skeleton/node';
+import { appId,createRuntime,fixtures } from './runtime.js';
+const id=appId(process.argv[2]);
+const runtime=await createRuntime(id);
+if(runtime.demo)for(const event of runtime.demoEvents())await runtime.engine.ingest(event);
+const server=await startLocalServer({...runtime,provider:()=>runtime.advisor.status(),publicDemo:false,port:Number(process.env.PORT??(id==='todo-afterlife'?4317:4318)),fixtureFiles:await fixtures(id),openBrowser:process.env.WRAITH_OPEN_BROWSER!=='0'});
+await server.tick();
+console.log(`${runtime.app.theme?.name} is running at ${server.origin}`);
+console.log(`Private sign-in link file: ${server.loginFile}`);
+console.log('Default provider: none. Demo data is fictional. Nothing is posted without approval and explicit live configuration.');
+for(const signal of ['SIGINT','SIGTERM'] as const)process.once(signal,()=>{void server.close().then(()=>process.exit(0));});

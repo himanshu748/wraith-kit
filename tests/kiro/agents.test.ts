@@ -160,8 +160,8 @@ describe('.kiro/agents', () => {
 describe('.kiro/settings/mcp.json', () => {
   const config = JSON.parse(readFileSync(path.join(repoRoot, '.kiro', 'settings', 'mcp.json'), 'utf8'));
 
-  it('configures only the aws-docs server, as the AWS Documentation MCP server README shows, with a pinned version', () => {
-    expect(Object.keys(config.mcpServers)).toEqual(['aws-docs']);
+  it('keeps aws-docs alongside the read-only wraith server, as the AWS Documentation MCP server README shows, with a pinned version', () => {
+    expect(Object.keys(config.mcpServers)).toEqual(['aws-docs', 'wraith']);
     const server = config.mcpServers['aws-docs'];
     expect(server.command).toBe('uvx');
     expect(server.args).toHaveLength(1);

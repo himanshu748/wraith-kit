@@ -1,0 +1,16 @@
+{
+  "name": "@wraith-kit/skeleton",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./core": "./src/core/index.ts",
+    "./node": "./src/node/index.ts",
+    "./aws": "./src/aws/index.ts",
+    "./llm": "./src/llm/index.ts",
+    "./ui": "./src/ui/index.ts",
+    "./mcp": "./src/mcp/index.ts",
+    "./testing": "./src/testing/index.ts"
+  }
+}

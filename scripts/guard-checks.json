@@ -36,33 +36,53 @@
       "description": "npm run typecheck exits 0",
       "required": true,
       "tool": "node_modules/.bin/tsc",
-      "command": ["npm", "run", "--silent", "typecheck"]
+      "command": [
+        "npm",
+        "run",
+        "--silent",
+        "typecheck"
+      ]
     },
     {
       "id": "lint",
       "description": "npm run lint exits 0",
       "required": true,
       "tool": "node_modules/.bin/eslint",
-      "command": ["npm", "run", "--silent", "lint"]
+      "command": [
+        "npm",
+        "run",
+        "--silent",
+        "lint"
+      ]
     },
     {
       "id": "fast-tests",
       "description": "npm run test:fast (vitest run with WRAITH_PBT_RUNS=20) exits 0",
       "required": true,
       "tool": "node_modules/.bin/vitest",
-      "command": ["npm", "run", "--silent", "test:fast"]
+      "command": [
+        "npm",
+        "run",
+        "--silent",
+        "test:fast"
+      ]
     },
     {
       "id": "core-integrity",
       "description": "The core-integrity test passes: both apps import the same unmodified skeleton core",
-      "required": false,
+      "required": true,
       "tool": "tests/core-integrity.test.ts",
-      "command": ["npx", "vitest", "run", "tests/core-integrity.test.ts"]
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/core-integrity.test.ts"
+      ]
     },
     {
       "id": "fixture-demo-label",
       "description": "Every staged text file under apps/<name>/fixtures/ contains the label DEMO",
-      "required": false,
+      "required": true,
       "tool": "app fixtures (apps/<name>/fixtures/)"
     }
   ]

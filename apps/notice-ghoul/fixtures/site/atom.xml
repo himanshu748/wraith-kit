@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Hollowmere DEMO notices</title><subtitle>Fictional institution, demo data</subtitle><id>urn:hollowmere:demo</id><updated>2026-11-17T09:00:00Z</updated><entry><id>urn:hollowmere:workshop</id><title>Night sky photography workshop</title><link href="https://hollowmere.example/notices/workshop"/><updated>2026-11-17T09:00:00Z</updated><summary>Register by 5 December at 4:00 PM. DEMO notice without a year.</summary></entry></feed>

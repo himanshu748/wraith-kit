@@ -1,0 +1,3 @@
+# DEMO: fictional fixture site permits polling.
+User-agent: *
+Allow: /

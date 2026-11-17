@@ -6,14 +6,14 @@ description: How to build a new Wraith Kit app (app number 3) from the skeleton'
 
 # Building a new Wraith app (app #3)
 
-A Wraith app is a folder under `apps/<name>/` that passes extension points to the skeleton's `defineApp({...})` and touches nothing else. TODO Afterlife and Notice Ghoul are built this way, and app #3 must be too. The names below (`defineApp`, `sources`, `rules`, `actions` and the rest) are design intent from PLAN.md section 5.1; the `wraith-core` spec sets the final names and signatures, so check the spec and the skeleton's exports before writing code. The skeleton and its scaffold are not built yet; until they are, this file describes the planned path.
+A Wraith app is a folder under `apps/<name>/` that passes extension points to the skeleton's `defineApp({...})` and touches nothing else. TODO Afterlife and Notice Ghoul are built this way, and app #3 must be too. The names below (`defineApp`, `sources`, `rules`, `actions` and the rest) are design intent from PLAN.md section 5.1; the `wraith-core` spec sets the final names and signatures, so check the spec and the skeleton's exports before writing code. The skeleton and scaffold are implemented. Use their exported TypeScript contracts and the guide below.
 
 ## The minimal app: one source, one rule, one action kind
 
 Follow this path first and stop when it works. Everything else is optional and has a default.
 
 1. **Start on a clean working tree** (`git status` shows nothing).
-2. **Scaffold the app** with the `new-app` scaffold script when it exists (it copies `skeleton/template/`, which is the minimal app). The folder name is the app id: lowercase kebab-case, and not `todo-afterlife` or `notice-ghoul`.
+2. **Scaffold the app** with `npm run new-app -- <name>` (it copies `skeleton/template/`, which is the minimal app). The folder name is the app id: lowercase kebab-case, and not `todo-afterlife` or `notice-ghoul`.
 3. **Write one source.** Either a poller with a schedule and an `expand` that fetches through `ctx.http` and returns `Event[]`, or a webhook route with only an `accept` that verifies the request and returns a delivery key and the payload (without an `expand`, the core turns the payload into one `Event`). `accept` makes no outbound calls. Give every event a deterministic idempotency key derived from the source identity, plus a content hash if the content can change.
 4. **Write one rule** with an `id`, a `priority`, a `description` and a pure `evaluate(event, ctx)` that returns findings and candidate actions. No I/O, time only from `ctx.clock`, other events only through `ctx.state`.
 5. **Write one action kind** with `describe` (the preview shown in the approval UI) and `execute(payload, ctx)`, which receives the idempotency key and an abort signal. Leave `safety` out, so it needs approval.
@@ -45,7 +45,7 @@ If a rule or aggregate must see unconfirmed LLM-sourced records (`includeUnconfi
 
 ## How to prove the app uses the unmodified core
 
-`tests/core-integrity.test.ts` (PLAN.md section 8) runs in `npm test`, in the commit guard and in the skeleton-warden review. It checks that the app resolves the skeleton to the same real path, imports only public entries, contains no copy of a skeleton file, loads skeleton files whose bytes match the files on disk, does not patch frozen registries, and that the skeleton never names the app. A new app is done only when that test passes with the new app included.
+`tests/core-integrity.test.ts` (PLAN.md section 8) runs in `npm test`, in the commit guard and in the skeleton-warden review. It checks that the app resolves the skeleton to the same real path, imports only public entries, contains no copy of a skeleton file, observes real loaded source paths/hashes and compares transformed shared modules across both processes, does not patch frozen registries, and that the skeleton never names the app. A new app is done only when that test passes with the new app included.
 
 ## The 15-minute guide
 

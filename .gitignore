@@ -26,3 +26,9 @@ apps/notice-ghoul/config.json
 
 # Logs
 *.log
+
+# DynamoDB Local telemetry metadata
+dynamodb-local-metadata.json
+
+# Raw browser captures; selected reviewed images are in docs/images
+output/

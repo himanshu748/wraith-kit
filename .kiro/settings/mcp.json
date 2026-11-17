@@ -2,10 +2,26 @@
   "mcpServers": {
     "aws-docs": {
       "command": "uvx",
-      "args": ["awslabs.aws-documentation-mcp-server@1.2.5"],
+      "args": [
+        "awslabs.aws-documentation-mcp-server@1.2.5"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR",
         "AWS_DOCUMENTATION_PARTITION": "aws"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "wraith": {
+      "command": "node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/mcp.ts",
+        "todo-afterlife"
+      ],
+      "env": {
+        "WRAITH_LLM_PROVIDER": "none"
       },
       "disabled": false,
       "autoApprove": []

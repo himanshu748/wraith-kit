@@ -1,0 +1,13 @@
+{
+  "sources": [
+    {
+      "id": "my-college-notices",
+      "url": "https://college.example/notices",
+      "format": "html",
+      "timezone": "Asia/Kolkata",
+      "dateOrder": "DMY",
+      "intervalMs": 900000,
+      "selectors": { "item": "article", "title": "h2", "link": "a", "date": "time", "body": "p" }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+import {it,expect} from 'vitest';
+import {randomUUID} from 'node:crypto';
+import {Engine,defineApp} from '../src/core/index.js';
+import {MemoryStore} from '../src/testing/index.js';
+import {createHttpHandler} from '../src/node/http.js';
+const app=defineApp({id:'http-test',sources:[{id:'cli',type:'cli',accept:r=>({key:r.body,payload:{}})}],rules:[{id:'r',priority:1,description:'propose',evaluate:()=>({actions:[{kind:'save',target:'x',payload:{},preview:'<script>hostile()</script>'}]})}],actions:{save:{describe:()=>'<script>hostile()</script>',execute:()=>({ok:true})}}});
+it('private data, one-time login, CSRF, stale decisions and sign-out through HTTP',async()=>{
+ const store=new MemoryStore();const engine=new Engine(app,store,{auditKey:'http-test-audit'});await engine.ingest({source:'cli',kind:'test',subject:'source',idempotencyKey:'x',data:{}});
+ const loginToken=randomUUID();
+ const handler=createHttpHandler({app,engine,store,sessionKey:'http-test-sessions',loginToken});
+ const send=(path:string,init:RequestInit={})=>handler(new Request('http://localhost:4317'+path,init));
+ expect((await send('/queue')).status).toBe(303);
+ const login=await send('/auth?token='+loginToken);expect(login.status).toBe(303);const cookie=login.headers.get('set-cookie')!.split(';')[0];
+ expect((await send('/auth?token='+loginToken)).status).toBe(400);
+ const queue=await send('/queue',{headers:{cookie}});const html=await queue.text();expect(html).toContain('&lt;script&gt;');expect(html).not.toContain('<script>hostile');
+ const csrf=/name="csrf" value="([^"]+)"/.exec(html)?.[1];expect(csrf).toBeTruthy();const id=Object.keys((await engine.snapshot()).actions)[0];
+ const decision='/actions/'+id+'/decision';expect((await send(decision,{method:'POST',headers:{cookie},body:'decision=approve'})).status).toBe(403);
+ expect((await send(decision,{method:'POST',headers:{cookie,origin:'https://other.invalid'},body:new URLSearchParams({csrf:csrf!,decision:'approve'})})).status).toBe(403);
+ expect((await send(decision,{method:'POST',headers:{cookie},body:new URLSearchParams({csrf:csrf!,decision:'approve'})})).status).toBe(303);
+ expect((await engine.snapshot()).actions[id].status).toBe('succeeded');
+ expect((await send(decision,{method:'POST',headers:{cookie},body:new URLSearchParams({csrf:csrf!,decision:'approve'})})).status).toBe(400);
+ expect((await engine.snapshot()).actions[id].totalAttempts).toBe(1);
+ await send('/logout',{method:'POST',headers:{cookie},body:new URLSearchParams({csrf:csrf!})});expect((await send('/queue',{headers:{cookie}})).status).toBe(303);
+});
+it('hosted demo sessions cannot read or decide real actions, including direct URLs',async()=>{
+ const store=new MemoryStore();const engine=new Engine(app,store,{auditKey:'http-test-audit'});
+ const real=await engine.ingest({source:'cli',kind:'test',subject:'private real source',idempotencyKey:'real',data:{}});
+ await engine.ingest({source:'cli',kind:'test',subject:'DEMO source',idempotencyKey:'demo',data:{},demo:true});
+ const handler=createHttpHandler({app,engine,store,sessionKey:'session-key',hosted:true,publicDemo:true,demoCode:'demo-access'});
+ const send=(path:string,init:RequestInit={})=>handler(new Request('https://workspace.example'+path,init));
+ const response=await send('/login');let cookie=response.headers.get('set-cookie')!.split(';')[0];const html=await response.text();let csrf=/name="csrf" value="([^"]+)"/.exec(html)![1];
+ const login=await send('/login',{method:'POST',headers:{cookie},body:new URLSearchParams({csrf,token:'demo-access'})});cookie=login.headers.get('set-cookie')!.split(';')[0];expect(cookie.startsWith('__Host-wraith=')).toBe(true);
+ const queue=await send('/queue',{headers:{cookie}});const queueHtml=await queue.text();expect(queueHtml).not.toContain('private real source');csrf=/name="csrf" value="([^"]+)"/.exec(queueHtml)![1];
+ const id=real.actions[0].id;expect((await send('/actions/'+id,{headers:{cookie}})).status).toBe(404);
+ expect((await send('/actions/'+id+'/decision',{method:'POST',headers:{cookie},body:new URLSearchParams({csrf,decision:'approve'})})).status).toBe(404);
+ expect((await engine.snapshot()).actions[id].status).toBe('proposed');
+});

@@ -1,8 +1,8 @@
 # Kiro IDE and T3 Code handoff
 
-Status on 17 Nov 2026: all eight feature requirements are written. Designs, task lists and the applications are not built. Kiro's monthly usage-limit error interrupted the previous session; Codex completed the requirements handoff. None of the steps below is claimed as already run.
+Status on 17 Nov 2026: the user subsequently instructed "build it". Codex implemented all eight designs/tasks, the shared core, both apps and their local tests. The earlier reserved IDE slot no longer blocks the build. The steps below now validate Kiro-specific surfaces and may add evidence; they must not overwrite working implementation or claim prior Codex work as Kiro-generated. Kiro's usage-limit interruption remains recorded. No IDE step below is claimed as run.
 
-The next product step is the `wraith-core` design in Kiro IDE, due **18 Nov 2026 at 12:00 IST** under PLAN.md section 10.7. Notice Ghoul's corresponding IDE step is due **26 Nov**. The core's reserved IDE slot is why this phase stops at requirements. If that slot is missed, the plan allows a CLI-authored core design and reserves the IDE Correctness demonstration for Notice Ghoul. The fallback must be attributed to whichever tool actually authors it.
+Review the existing designs and tests in the IDE, using an isolated comparison if generating Correctness properties. Preserve current files and report any concrete gap; do not regenerate the project wholesale. Historical due dates below came from the approved plan.
 
 ## 1. Start Kiro in the correct project
 

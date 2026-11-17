@@ -1,0 +1,11 @@
+#!/bin/sh
+# Optional Git hook. Install from the app README; never overwrites another hook.
+# Any infrastructure error stays advisory. Only the completed opt-in scan exits 2.
+if ! command -v node >/dev/null 2>&1; then
+  printf '%s\n' 'TODO Afterlife: Node unavailable; not blocking commit.'
+  exit 0
+fi
+node --import tsx apps/todo-afterlife/src/precommit.ts
+result=$?
+if [ "$result" -eq 2 ]; then exit 2; fi
+exit 0

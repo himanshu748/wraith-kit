@@ -48,6 +48,7 @@ export function makeTempRepo(options: TempRepoOptions = {}): string {
   git(dir, 'init', '-q');
   const files: Record<string, string> = {
     '.gitignore': 'node_modules/\n.env\n',
+    'apps/example/fixtures/sample.txt': 'DEMO fixture\n',
     'README.md': [
       '# Fixture repo',
       '',

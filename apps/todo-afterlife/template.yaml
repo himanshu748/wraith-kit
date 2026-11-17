@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Wraith Kit demo; deploy only after checking account free allowances.
+Parameters:
+  SecretsParameter:
+    Type: String
+    Description: Existing SSM SecureString parameter name, containing the runtime secrets JSON.
+  AllowLiveIssues:
+    Type: String
+    Default: '0'
+    AllowedValues: ['0', '1']
+  ReservedConcurrency:
+    Type: Number
+    Default: 2
+Resources:
+  State:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PROVISIONED
+      ProvisionedThroughput: {ReadCapacityUnits: 5, WriteCapacityUnits: 5}
+      TableClass: STANDARD
+      AttributeDefinitions:
+        - {AttributeName: pk, AttributeType: S}
+        - {AttributeName: sk, AttributeType: N}
+      KeySchema:
+        - {AttributeName: pk, KeyType: HASH}
+        - {AttributeName: sk, KeyType: RANGE}
+      TimeToLiveSpecification: {AttributeName: expiresAt, Enabled: true}
+      SSESpecification: {SSEEnabled: true}
+  App:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dist/
+      Handler: aws-entry.handler
+      Runtime: nodejs22.x
+      Architectures: [arm64]
+      MemorySize: 256
+      Timeout: 60
+      ReservedConcurrentExecutions: !Ref ReservedConcurrency
+      FunctionUrlConfig: {AuthType: NONE}
+      Environment:
+        Variables:
+          WRAITH_APP: todo-afterlife
+          WRAITH_TABLE: !Ref State
+          WRAITH_SECRETS_PARAMETER: !Ref SecretsParameter
+          WRAITH_LLM_PROVIDER: none
+          WRAITH_LIVE_ISSUES: !Ref AllowLiveIssues
+          WRAITH_DAILY_REQUEST_CAP: '10000'
+      Policies:
+        - DynamoDBCrudPolicy: {TableName: !Ref State}
+        - Statement:
+            - Effect: Allow
+              Action: ssm:GetParameter
+              Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${SecretsParameter}'
+            - Effect: Allow
+              Action: lambda:InvokeFunction
+              Resource: !Sub 'arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:${AWS::StackName}-*'
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${App}'
+      RetentionInDays: 7
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: scheduler.amazonaws.com}
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: tick
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt App.Arn
+  Tick:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      ScheduleExpression: rate(5 minutes)
+      FlexibleTimeWindow: {Mode: 'OFF'}
+      Target:
+        Arn: !GetAtt App.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+        Input: '{"task":"tick"}'
+Outputs:
+  AppUrl:
+    Value: !GetAtt AppUrl.FunctionUrl

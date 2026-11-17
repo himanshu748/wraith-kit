@@ -1,15 +1,27 @@
 {
   "compilerOptions": {
     "target": "ES2023",
-    "lib": ["ES2023"],
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["scripts", "tests", "*.ts", "eslint.config.js"]
+  "include": [
+    "scripts",
+    "tests",
+    "*.ts",
+    "eslint.config.js",
+    "skeleton/**/*.ts",
+    "apps/**/*.ts"
+  ]
 }

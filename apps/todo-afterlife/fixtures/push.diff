@@ -1,0 +1,8 @@
+# DEMO DATA: fictional checkout repository.
+diff --git a/src/payment.ts b/src/payment.ts
+--- a/src/payment.ts
++++ b/src/payment.ts
+@@ -10,0 +11,3 @@ export async function reconcilePayment()
++  // TODO: fix this later
++  // FIXME: maybe remove this retry
++  // TODO(@mira): Retry the request after 429; done when the rate-limit test passes.
