@@ -17,7 +17,9 @@ Wraith Kit is planned as a small TypeScript skeleton for agents that follow one 
 ## Status
 
 - Phase 1 (spec) started on 16 Nov 2026, after the plan was approved.
-- Nothing is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license, the TypeScript toolchain, six Kiro agent hooks (`.kiro/hooks/`) with their scripts (`scripts/hooks/`) and tests, five steering files (`.kiro/steering/`), two custom agents (`.kiro/agents/`) and the MCP config (`.kiro/settings/mcp.json`). Kiro experiments are recorded in [docs/experiments.md](docs/experiments.md). The skeleton and both apps come after their specs.
+- Neither application is runnable yet. The repo holds the plan, this README, [KIRO_USAGE.md](KIRO_USAGE.md), the license, the TypeScript toolchain, six Kiro agent hooks (`.kiro/hooks/`) with their scripts (`scripts/hooks/`) and tests, five steering files (`.kiro/steering/`), two custom agents (`.kiro/agents/`) and the MCP config (`.kiro/settings/mcp.json`). Kiro experiments are recorded in [docs/experiments.md](docs/experiments.md). The skeleton and both apps come after their specs.
+- All eight feature requirements are written (564 acceptance criteria). Designs and tasks remain pending the reserved Kiro IDE core-design step on 18 Nov at 12:00 IST. Follow [the IDE handoff](docs/kiro-ide-steps.md) for the exact prompts and evidence to return.
+- The 17 Nov continuation used Codex through T3 Code after the Kiro usage-limit interruption; tool attribution is recorded in [KIRO_USAGE.md](KIRO_USAGE.md).
 - The full plan, with dates and the order of work, is in [PLAN.md](PLAN.md).
 
 ## Working app URLs
@@ -51,7 +53,7 @@ Today the tests cover the test helper `pbtRuns()` in `tests/pbt.ts`, the Kiro ho
 
 ## Repo layout
 
-Planned layout (PLAN.md section 3). Today `.kiro/hooks/`, `.kiro/steering/`, `.kiro/agents/`, `.kiro/settings/`, `scripts/` (hook scripts and `guard-checks.json`), `tests/`, `docs/experiments.md`, the stub of `docs/make-your-own-app-in-15-min.md` and the root files exist.
+Planned layout (PLAN.md section 3). Today `.kiro/specs/*/requirements.md`, `.kiro/hooks/`, `.kiro/steering/`, `.kiro/agents/`, `.kiro/settings/`, `scripts/` (hook scripts and `guard-checks.json`), `tests/`, `docs/experiments.md`, the stub of `docs/make-your-own-app-in-15-min.md` and the root files exist.
 
 ```text
 wraith-kit/
@@ -103,7 +105,8 @@ Other pre-existing work and tools:
 | Node.js and its built-in modules | v22.14.0 | MIT (Node.js core; bundled third-party parts carry their own licenses, listed in the Node.js LICENSE file) | Runtime for the toolchain, the tests and later the skeleton |
 | npm | 10.9.2 | Artistic-2.0 | Installing packages, running scripts |
 | The MIT License text | standard text | n/a | `LICENSE`, copied from [choosealicense.com](https://choosealicense.com/licenses/mit/) with the year and holder filled in |
-| Kiro CLI, driven over ACP by T3 Code | 3.3.0 (from `kiro-cli --version`) | to confirm | The AI agent that writes this repo (see [KIRO_USAGE.md](KIRO_USAGE.md)) |
+| Kiro CLI, driven over ACP by T3 Code | 3.3.0 (from `kiro-cli --version`) | to confirm | Authored the plan, foundation and initial requirements (see [KIRO_USAGE.md](KIRO_USAGE.md)) |
+| Codex harness through T3 Code | Session model gpt-6-astra; harness version not captured | to confirm | Resumed interrupted requirements and wrote the remaining Phase 1 documentation on 17 Nov; not Kiro usage |
 | T3 Code | to confirm | to confirm | The app that drives the Kiro CLI session |
 | uv and uvx | 0.8.2 (from `uvx --version`, installed with Homebrew) | MIT OR Apache-2.0 (from PyPI's `uv` package metadata) | Running the AWS Documentation MCP server with `uvx`; uvx ran it on Python 3.12.11 |
 | `awslabs.aws-documentation-mcp-server` (AWS Documentation MCP server) | 1.2.5 (pinned in `.kiro/settings/mcp.json`) | Apache-2.0 (from PyPI) | The `aws-docs` MCP server Kiro uses to read AWS documentation. uvx installs it and its Python dependencies (45 packages on 16 Nov 2026) into uv's cache, outside this repo |

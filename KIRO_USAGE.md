@@ -2,12 +2,12 @@
 
 This file was written for the Kiroween 2026 hackathon write-up. It answers the Kiro questions from the [official rules](https://kiroween.devpost.com/rules) and is updated after every task. It records only what has happened so far. Anything that has not happened yet says "not yet", and anything not checked says "to confirm".
 
-Last updated: 17 Nov 2026, completing the Phase 1 requirements task for the four skeleton specs (`wraith-core`, `runtimes`, `approval-ui`, `llm-adapter`).
+Last updated: 17 Nov 2026, completing the eight requirement documents and the Kiro IDE handoff. Designs and application implementation remain pending.
 
 ## Where the work runs today
 
 - Work through the initial four requirement drafts was authored by Kiro CLI, driven over ACP by T3 Code. After its monthly usage-limit failure, Codex through T3 Code resumed on 17 Nov, reviewed and committed the interrupted approval-ui and llm-adapter drafts, and continued documentation. That continuation is not claimed as Kiro usage. Experiment E11 checked the earlier Kiro session: its ACP process was `kiro-cli acp --agent-engine=v3 --auth-method=cli`, its executable is `/Users/himanshujha/.local/bin/kiro-cli` (`kiro-cli 3.3.0`), and it runs the 3.3.0 agent bundle on the V3 engine. Details in [docs/experiments.md](docs/experiments.md#e11-which-kiro-cli-version-does-the-acp-session-run).
-- The earlier Kiro session had its workspace root at the outer folder `/Users/himanshujha/.t3/projects/kiro`, not at `wraith-kit/`. Kiro loads steering, hooks, agents, specs and MCP config from the session's workspace root, so anything in `wraith-kit/.kiro` does not load in this session. The hooks in `wraith-kit/.kiro/hooks/` therefore do not guard this session's own commits. Instead, the commit guard is run by hand (`npm run guard`) on the staged tree before each commit, until a Kiro session starts in `wraith-kit/`.
+- The earlier Kiro session had its workspace root at the outer folder `/Users/himanshujha/.t3/projects/kiro`, not at `wraith-kit/`. Kiro loads steering, hooks, agents, specs and MCP config from the session's workspace root, so the earlier outer-folder session did not load `wraith-kit/.kiro`. The hooks in `wraith-kit/.kiro/hooks/` therefore did not guard that session's own commits. The Codex continuation also invokes the scripts manually. Instead, the commit guard is run by hand (`npm run guard`) on the staged tree before each commit, until a Kiro session starts in `wraith-kit/`.
 - Checks run by hand before each commit of the hooks task, of the steering, agents and MCP task and of the requirements task: `npm run typecheck`, `npm run lint`, `npm test` and `npm run guard` (which runs the U+2014 scan, the `.kiro` and `.gitignore` check, the secret scan and the other checks in `scripts/guard-checks.json`). The requirements task also ran `npm run spec:trace` before each commit.
 
 ## Task log
@@ -22,11 +22,13 @@ Last updated: 17 Nov 2026, completing the Phase 1 requirements task for the four
 | Steering (commit `cc5b835`) | Kiro CLI over ACP, through T3 Code | Five steering files in `.kiro/steering/`, the stub of `docs/make-your-own-app-in-15-min.md`, and `tests/kiro/steering.test.ts` (front matter, file references, and the spec ID examples in `structure.md` run through the spec-trace parser) |
 | Resumed requirements (commits `99e7027`, `854bc59`) | Codex through T3 Code, not a Kiro surface | Reviewed and committed Kiro-authored interrupted drafts; 266 tests, typecheck, lint and guard passed without changing test timeouts |
 | Custom agents and MCP (commit `b96786e`) | Kiro CLI over ACP, through T3 Code, plus one headless `kiro-cli chat` run in `wraith-kit/` | `skeleton-warden` and `app-smith` in `.kiro/agents/`, the `aws-docs` server in `.kiro/settings/mcp.json`, `tests/kiro/agents.test.ts`, and experiment E7 |
+| App and tooling requirements (`de2fe5b`, `b6d8362`, `2d7279b`, `86e6d88`) | Codex through T3 Code, not a Kiro surface | Four EARS requirement docs from the approved plan; design questions and property mappings recorded |
+| IDE handoff | Codex through T3 Code, with official Kiro docs checked | Prepared the user-run IDE design and T3 experiment steps; no IDE execution claimed |
 
 ## Kiro surfaces used (IDE, CLI, Web, Crew) and how they differed
 
 - **Kiro CLI:** used for the plan, foundation, hooks, steering, agents, MCP configuration and first four requirement drafts, through T3 Code over ACP (see above). In the hooks task the CLI was also run headless, twice, as `kiro-cli chat --no-interactive` inside a gitignored scratch folder, to test hook behaviour. The first run started on the V2 engine (the default for `--no-interactive` without `--trust-all-tools`, per `kiro-cli chat --help`) and every tool call was denied; the second run, with `--agent-engine v3`, worked (docs/experiments.md). In the steering, agents and MCP task it ran headless once more, with `--agent-engine v3` from the `wraith-kit/` root, to see which steering files load (E7). The CLI also validated the agent files (`kiro-cli agent validate`) and listed agents and MCP servers (`kiro-cli agent list`, `kiro-cli mcp list`).
-- **Kiro IDE:** not used yet. Planned: the author runs the design phase of the `wraith-core` and `notice-ghoul` specs in the IDE, because the Correctness feature (properties extracted from EARS requirements) is IDE only (PLAN.md section 10.7).
+- **Kiro IDE:** not used yet. [Exact handoff steps](docs/kiro-ide-steps.md) are prepared. Planned: the author runs the design phase of the `wraith-core` and `notice-ghoul` specs in the IDE, because the Correctness feature (properties extracted from EARS requirements) is IDE only (PLAN.md section 10.7).
 - **Kiro Web:** not used yet. Not planned.
 - **Kiro Crew:** not used yet. Not planned.
 - **How they differed:** not yet. Only one surface has been used.
@@ -82,7 +84,7 @@ What the hook experiments found (details and raw payloads in [docs/experiments.m
 ## Spec-driven development versus vibe coding
 
 - So far the work has been plan-first: PLAN.md was written, reviewed three times and approved before any code or config was added.
-- **Four specs have requirements** (16 Nov 2026): `wraith-core`, `runtimes`, `approval-ui` and `llm-adapter`, each in `.kiro/specs/<name>/requirements.md`. They follow the format the [Feature Specs](https://kiro.dev/docs/specs/feature-specs) page gives for `requirements.md`: user stories with acceptance criteria in EARS notation ("WHEN [condition/event] THE SYSTEM SHALL [expected behavior]"). Each file has an Introduction (scope, what is out of scope, the PLAN.md sections it comes from, the specs it depends on), a Glossary, numbered requirements that each have a user story and EARS criteria (WHEN, WHILE, IF ... THEN, WHERE, or an unconditional THE ... SHALL), and "Notes for the design phase": the open questions quoted from PLAN.md, the PLAN.md properties (P1 to P7) mapped to criterion IDs, and the docs still to confirm.
+- **Eight specs have requirements** (16-17 Nov 2026): `wraith-core`, `runtimes`, `approval-ui`, `llm-adapter`, `todo-afterlife`, `notice-ghoul`, `wraith-mcp` and `app-authoring`, each in `.kiro/specs/<name>/requirements.md`. They follow the format the [Feature Specs](https://kiro.dev/docs/specs/feature-specs) page gives for `requirements.md`: user stories with acceptance criteria in EARS notation ("WHEN [condition/event] THE SYSTEM SHALL [expected behavior]"). Each file has an Introduction, a Glossary, numbered requirements with user stories and EARS criteria, and Notes for the design phase. Those notes identify unresolved decisions and APIs to confirm; where PLAN.md assigns properties, they map those properties to criterion IDs.
 - **How the first four were written:** in Kiro CLI through T3 Code, by hand in that format, from PLAN.md sections 5, 8, 9 and 11. Not with `/spec new`: the [Specs](https://kiro.dev/docs/specs) page says the CLI generates a spec's files in `.kiro/specs/<name>/`, and this session's workspace root is the outer folder, not `wraith-kit/`. Whether `/spec` is reachable through T3 Code is experiment E6, not run yet.
 
 | Spec | Requirements | Criteria | Commit |
@@ -91,11 +93,16 @@ What the hook experiments found (details and raw payloads in [docs/experiments.m
 | `runtimes` | 15 | 85 | `d7d64ea` |
 | `approval-ui` | 15 | 72 | `99e7027` |
 | `llm-adapter` | 11 | 47 | `854bc59` |
+| `todo-afterlife` | 9 | 57 | `de2fe5b` |
+| `notice-ghoul` | 10 | 66 | `b6d8362` |
+| `wraith-mcp` | 5 | 26 | `2d7279b` |
+| `app-authoring` | 5 | 31 | `86e6d88` |
 
-- **Traceability:** `npm run spec:trace` (the `spec-trace` hook's script in strict mode) reports `4 spec(s), 384 requirement ID(s), 0 error(s), 0 warning(s)`, and "design pending (only requirements.md exists)" for each of the four. The counts above come from the same parser. It accepted every criterion form used, so it needed no change.
+- **Traceability:** `npm run spec:trace` (the `spec-trace` hook's script in strict mode) reports `8 spec(s), 564 requirement ID(s), 0 error(s), 0 warning(s)`, and "design pending (only requirements.md exists)" for each of the eight. The counts above come from the same parser. The checker itself needed no change; one newly written criterion was corrected to its required EARS form.
 - **Why the designs wait.** Kiro's [Correctness](https://kiro.dev/docs/specs/correctness) feature (property-based testing) is IDE only, and "In the design phase, Kiro extracts properties from your requirements". So the design phase of `wraith-core` is the author's Kiro IDE step (due 12:00 IST on 18 Nov 2026, with the CLI fallback in PLAN.md section 10.7). The design.md and tasks.md of `runtimes`, `approval-ui` and `llm-adapter` are written in the CLI after `wraith-core`'s design exists, so that their interfaces match the core's (PLAN.md section 12). No design.md or tasks.md exists yet.
 - **Analyze Requirements** (`/spec analyze_requirements <name>` in the CLI, per [Analyze Requirements](https://kiro.dev/docs/specs/analyze-requirements)): not run yet. It needs a Kiro session started in `wraith-kit/`.
-- The other four specs (`todo-afterlife`, `notice-ghoul`, `wraith-mcp`, `app-authoring`) have no requirements yet; they are the next task.
+- **The remaining four requirements** (`todo-afterlife`, `notice-ghoul`, `wraith-mcp`, `app-authoring`) were authored by Codex through T3 Code on 17 Nov from the Kiro-authored plan, not generated by a Kiro spec command. They include app property mappings, incomplete GitHub-result handling, symmetric deadline disagreement, read-only MCP boundaries and all six shared-core integrity checks.
+- **IDE handoff:** [docs/kiro-ide-steps.md](docs/kiro-ide-steps.md) provides the E1/E6/E7/E8 prompts, the core design step due 18 Nov at 12:00 IST and Notice Ghoul design due 26 Nov. These steps remain pending. Official Kiro HTML docs were rechecked on 17 Nov; the Markdown page variants were inaccessible in the web tool. No new Kiro session or IDE experiment was run in this continuation.
 - **What writing EARS criteria showed so far:** turning the plan's prose into one testable behaviour per criterion surfaced questions the plan had not settled, and each spec's Notes list them. Examples: property P7 says retry delays stay within [0, cap] and that `Retry-After` is honoured, which conflict when `Retry-After` is longer than the cap (`wraith-core`); an action of a safe kind whose wording an LLM rewrote would still auto-approve, because the LLM mark comes only from extracted data and queries (`wraith-core`); WCAG 2.2 success criterion 2.1.4 requires a way to turn off letter-only shortcuts such as the proposed `j`, `k`, `a` and `r` (`approval-ui`); and the promise that Ollama keeps data on the machine holds only if the Ollama base URL is a loopback address (`llm-adapter`).
 - Comparison with vibe coding: not yet. No code has been written from a spec yet.
 
@@ -151,3 +158,11 @@ The experiments that check how hooks, steering and agents behave in this setup (
 ## Steps run in the Kiro IDE
 
 None yet.
+
+## 17 Nov continuation validation
+
+The interrupted approval-ui and llm-adapter drafts were preserved and committed. The four app/tooling requirements and the IDE handoff were completed using Codex. No test timeout or guard budget was changed. A first traceability run caught one non-EARS `BEFORE` criterion in the new TODO spec; it was corrected to `WHEN` and the strict checker then reported all 564 criteria with zero errors and warnings.
+
+Before each commit, typecheck, lint, the 266-test suite and the staged commit guard passed. The guard also checked secrets, environment files, dependency attribution, licensing and `.kiro` visibility. Its core-integrity and fixture-demo-label checks were explicitly skipped because the apps do not exist yet. These results establish the tooling and requirement format only: no core, app, browser journey, cloud deployment or runtime provider call was tested.
+
+The official Kiroween rules were reread on 17 Nov; the page records a 16 Nov eligibility update for Australia and still gives 4 Dec 2026 at 2:00 PM Pacific as the deadline. This continuation did not change the approved category or submission plan. Publication and submission have not occurred.
