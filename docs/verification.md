@@ -2,7 +2,7 @@
 
 This record covers the local Wraith Kit implementation on 17 Nov 2026. Local tests, browser interactions, live-provider calls, deployment and publication are separate evidence. Nothing in this record establishes a hosted service or a submitted hackathon entry.
 
-Validation environments: Node.js 26.12.0/npm11.20.0 and Node.js22.14.0/npm10.9.2 on macOS. The final360-test all-backend suite also passed under Node22.14.0 in9.20seconds. Browser checks used Chromium through Playwright.
+Validation environments: Node.js 26.12.0/npm 11.20.0 and Node.js 22.14.0/npm 10.9.2 on macOS. The final 360-test all-backend suite also passed under Node 22.14.0 in 9.20 seconds. Browser checks used Chromium through Playwright.
 
 ## Observed checks
 
@@ -52,3 +52,11 @@ The final regenerated queue, digest and mobile confirmation screenshots were ins
 ## Review before commit
 
 Both source adapters and the runtime boundaries were inspected: live GitHub writes require explicit configuration plus approval, model calls are optional and quota-bound, hosted demo sessions cannot access real actions, and tests clear inherited live-integration settings. The secret scan initially flagged two intentional test literals; they now use per-run random fixture values. The commit guard caught and corrected an em dash in a fixture page. Neither finding was an exposed real credential.
+
+## Committed clean-install check
+
+Implementation commit: `84851a773d8f1b2b8b42a73756262472d1804be3`.
+
+A Git archive of that exact commit was extracted into a new temporary directory with no node_modules, local store or build output. `npm ci --no-fund` succeeded under Node 22.14.0/npm 10.9.2. Each documented `npm run dev:todo` / `npm run dev:notices` command then started with an ephemeral loopback port, private configuration outside the checkout and all live integrations disabled. Each private one-time link exchanged successfully, and authenticated `/queue` returned HTTP 200 with seeded proposals. The child processes and temporary checkout/configuration were removed after the check.
+
+Before that implementation commit, the staged text secret scan reported zero findings and zero omitted files. Selected binary browser captures were reviewed separately and committed under [images](images/); their pixels are not covered by the text scanner. Every required commit-guard check passed, including core integrity and fixture labels. All relative Markdown file links resolved. No remote was created and nothing was pushed.

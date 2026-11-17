@@ -1,5 +1,8 @@
 # Requirements: wraith-core
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 `wraith-core` is the pure pipeline of the Wraith Kit skeleton: `skeleton/src/core`, exported as the skeleton package's `core` entry. It turns an incoming webhook, poll or local command into Events, runs deterministic rules, optionally asks an advisor (an LLM behind the `llm-adapter` spec), and ends with proposed Actions that wait for a person unless their kind is declared safe and they carry no unconfirmed LLM-sourced data. It keeps an audit log written with every state change, and it makes intake and execution idempotent.

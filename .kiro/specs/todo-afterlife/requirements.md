@@ -1,5 +1,8 @@
 # Requirements: todo-afterlife
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 TODO Afterlife turns vague code comments into reviewable tasks. It is built only from Wraith Kit extension points: a GitHub push source and a local staged-diff source, deterministic rules, an optional reword advisor, and approved patch or issue actions. No app-specific pipeline is forked from the skeleton.

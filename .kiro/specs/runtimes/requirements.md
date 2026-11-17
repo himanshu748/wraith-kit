@@ -1,5 +1,8 @@
 # Requirements: runtimes
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 `runtimes` covers the two ways to run a Wraith Kit app: locally with Node (the skeleton's `node` entry: an HTTP server, a JSON-lines file store and an interval scheduler) and on the AWS free tier (the `aws` entry: a Lambda Function URL handler, a scheduled tick handler and a DynamoDB store, deployed with one SAM template per app). Both runtimes give the core the same store behaviour, and one store contract suite checks both.

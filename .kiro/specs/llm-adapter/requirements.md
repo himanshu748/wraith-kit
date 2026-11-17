@@ -1,5 +1,8 @@
 # Requirements: llm-adapter
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 `llm-adapter` is the skeleton's `llm` entry: one interface between the Wraith core's advisor gate and an optional LLM. It offers three providers, `none` (the default, which sends nothing), `modal` (a Modal Dedicated Endpoint used within the Starter plan's free monthly credits) and `ollama` (a local model, local mode only), selected by `WRAITH_LLM_PROVIDER`. Both remote providers speak the OpenAI-compatible Chat Completions API, so one client called with `fetch` serves both. Every failure ends in the advisor's deterministic fallback, so judges can always test both apps with no key.

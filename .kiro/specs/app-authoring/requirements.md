@@ -1,5 +1,8 @@
 # Requirements: app-authoring
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 App authoring makes the Skeleton Crew claim reproducible: a developer can build a third app from public extension points, and tests show that both supplied apps use the same unmodified skeleton. PLAN.md sections 5.1, 8, 10.2 and 10.5 define the scope.

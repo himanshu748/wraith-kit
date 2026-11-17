@@ -16,7 +16,7 @@ Official rules checked 17 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 - [x] Inspect desktop/mobile layouts, keyboard, reduced motion and JavaScript-disabled forms; retain actual axe and browser results.
 - [x] Confirm both apps import the same unmodified core, and that each app has its own runnable README.
 - [ ] Rehearse the app-authoring guide. Report agent time separately; leave human timing unmeasured until the author actually times it.
-- [ ] Reconcile README, app READMEs, `KIRO_USAGE.md`, this checklist and the demo with the final implementation and known limitations.
+- [x] Reconcile README, app READMEs, `KIRO_USAGE.md`, this checklist and the local demo with the final implementation and known limitations. Clean Git-archive quickstarts passed; actual video remains pending.
 
 ## Required Kiro evidence
 

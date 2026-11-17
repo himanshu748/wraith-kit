@@ -1,5 +1,8 @@
 # Requirements: wraith-mcp
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 The `wraith` MCP server lets Kiro inspect and explain a local Wraith app without gaining authority to approve or execute actions. It uses the skeleton's `mcp` entry, public read interfaces and isolated rule evaluation. PLAN.md sections 5.4 and 10.6 define the boundary.

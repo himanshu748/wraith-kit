@@ -1,5 +1,8 @@
 # Requirements: approval-ui
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 `approval-ui` is the small web UI where a person meets Wraith Kit: a queue of proposed actions (working name "Limbo"), an action detail with the full explanation and an exact preview, the decisions (approve, pick a listed candidate, edit then approve, reject, retry), the audit log with a chain-verified badge, and a settings screen. It is the skeleton's `ui` entry, shared by both apps and by app #3, and it runs in both runtimes.

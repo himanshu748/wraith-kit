@@ -1,5 +1,8 @@
 # Requirements: notice-ghoul
 
+**Implementation update, 17 Nov 2026:** design.md and tasks.md now exist after the user's instruction to build. See [verification](../../../docs/verification.md) for actual local results and remaining external/Kiro evidence. Original phase-status notes below are retained as history.
+
+
 ## Introduction
 
 Notice Ghoul helps students find deadlines buried in notice pages and feeds. It ingests notices, extracts dates, reconciles duplicates, asks about uncertain values and produces a digest and calendar file. It does not provide general calendar planning or send notifications. PLAN.md sections 7, 8 and 9.2 define this scope.
