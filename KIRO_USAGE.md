@@ -2,7 +2,7 @@
 
 This file was written for the Kiroween 2026 hackathon write-up. It answers the Kiro questions from the [official rules](https://kiroween.devpost.com/rules) and is updated after every task. It records only what has happened so far. Anything that has not happened yet says "not yet", and anything not checked says "to confirm".
 
-Last updated: 17 Nov 2026, implementation continuation. The shared engine, both apps, UI, local/AWS adapters, MCP server and scaffold are implemented. Local integration evidence is recorded below and in docs/verification.md; cloud/live-provider and Kiro IDE evidence remain separate gates.
+Last updated 20 Nov 2026. The implementation and local verification are recorded below. The latest Kiro CLI run reached the prompt stage, then hit the account usage limit before executing tools. See [E12](docs/experiments.md#e12-project-root-kiro-cli-retry-on-20-nov) for the observed results.
 
 ## Where the work runs today
 
@@ -155,7 +155,7 @@ The experiments that check how hooks, steering and agents behave in this setup (
 
 - Run in the hooks task: E2, E3, E4, E5 and E10 (two headless `kiro-cli chat` runs in a gitignored scratch folder; the first, on the default V2 engine, failed on tool permissions, and the second, on V3, answered all five), and E11 (from the process list).
 - Run in the steering, agents and MCP task: E7 (one headless V3 run from the `wraith-kit/` root; the `always` files loaded in full and the `auto` file was offered by name and description). It also gave related evidence for E8: both project agents were offered as commands.
-- Not run yet: E1, E6 and E8 need a Kiro session started in `wraith-kit/`; E9 belongs to the `wraith` MCP server task.
+- Pending execution: E1, E6 and E8 need a Kiro session with available usage in `wraith-kit/`. E9 is still open. The project-root CLI retry E12 confirmed discovery and stopped at the account usage limit.
 
 ## Steps run in the Kiro IDE
 

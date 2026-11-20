@@ -34,4 +34,4 @@ See [verification](../../../docs/verification.md) and the source/test files for 
 
 ## Remaining limits
 
-Live Modal/Ollama response behavior, account terms, model licenses and free allowances remain unverified. The shipped default is none. Local HTTP test doubles establish adapter protocol/failure handling only.
+A real local Ollama trial verified timeout fallback in both apps. Successful app-level model advice remains unverified at the shipped timeout. Live Modal behavior, account terms and free allowances still need validation. The shipped default is none. See [the 20 Nov trial](../../../docs/verification.md#local-provider-check-on-20-nov).

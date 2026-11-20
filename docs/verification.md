@@ -44,7 +44,7 @@ The final regenerated queue, digest and mobile confirmation screenshots were ins
 ## Evidence limits
 
 - Fixture notices and source comments are synthetic demo data. GitHub issue creation without configured credentials is a dry-run; no real public issue was created by that path.
-- No live Modal or Ollama inference result is claimed. Provider contract tests and fallback checks do not establish live-provider behavior.
+- The real local Ollama timeout path was exercised in both apps on 20 Nov. Successful app-level model advice and live Modal remain unverified. See the provider check below.
 - AWS deployment, account free-tier eligibility, hosted access and public repository visibility remain unverified until their authorized external steps occur.
 - Kiro's prior foundation and experiments are recorded in [KIRO_USAGE.md](../KIRO_USAGE.md) and [experiments.md](experiments.md). The continuation here is Codex-authored; no Kiro IDE Correctness or automatic hook run is inferred from a manual test invocation.
 - No video has been recorded or uploaded. Blog, social and Devpost materials are prepared drafts, not published or submitted artifacts.
@@ -60,3 +60,19 @@ Implementation commit: `84851a773d8f1b2b8b42a73756262472d1804be3`.
 A Git archive of that exact commit was extracted into a new temporary directory with no node_modules, local store or build output. `npm ci --no-fund` succeeded under Node 22.14.0/npm 10.9.2. Each documented `npm run dev:todo` / `npm run dev:notices` command then started with an ephemeral loopback port, private configuration outside the checkout and all live integrations disabled. Each private one-time link exchanged successfully, and authenticated `/queue` returned HTTP 200 with seeded proposals. The child processes and temporary checkout/configuration were removed after the check.
 
 Before that implementation commit, the staged text secret scan reported zero findings and zero omitted files. Selected binary browser captures were reviewed separately and committed under [images](images/); their pixels are not covered by the text scanner. Every required commit-guard check passed, including core integrity and fixture labels. All relative Markdown file links resolved. No remote was created and nothing was pushed.
+
+
+## Local provider check on 20 Nov
+
+Ran Ollama 0.31.1 with the already installed `qwen3:4b-instruct` model on a separate loopback port. The process logged that cloud features were disabled. Used temporary file stores, synthetic inputs and the shipped eight-second timeout. TODO Afterlife ingested a normalized fictional push event directly to exercise rewording. Notice Ghoul ingested the ambiguous fictional fee deadline to exercise extraction. [Ollama local API reference](https://docs.ollama.com/api/openai-compatibility) · [Local-only configuration](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features)
+
+| Run | TODO Afterlife | Notice Ghoul |
+|---|---|---|
+| Cold process | Fallback recorded in 8.44 s | Fallback recorded in 8.57 s |
+| After a successful warm-up request | Fallback recorded in 9.34 s | Fallback recorded in 8.70 s |
+
+Durations include local intake and store writes. The adapter logged `timeout` in all four app runs. TODO Afterlife kept the rule-based rewrite and issue proposals pending. Notice Ghoul kept the date confirmation pending. Each replay reused the previous event without another advisor call, and each audit chain verified. The warm-up HTTP request returned 200 in 38.47 s. Neither app consumed a model suggestion at its default timeout on this machine. Model-free mode remains the recommended demo path.
+
+A standalone invocation of the same adapter with its test timeout set to 60 seconds parsed a genuine reply from a short synthetic prompt in 12.52 s. This verifies the local response and schema parser. App configuration still uses eight seconds, and the two app probes above establish the fallback behavior at that setting.
+
+On 20 Nov the documented app commands also started both default-port demos in model-free mode with separate scratch stores. Both local landing pages returned HTTP 200.

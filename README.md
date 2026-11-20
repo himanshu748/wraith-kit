@@ -91,7 +91,7 @@ Both apps have SAM templates for Lambda Function URLs, DynamoDB and scheduled ti
 - TODO Afterlife hosted URL: `<todo-afterlife-function-url>` (awaiting authorized deployment).
 - Notice Ghoul hosted URL: `<notice-ghoul-function-url>` (awaiting authorized deployment).
 
-Local state is a small-workload full-snapshot journal, not an unbounded database. AWS active state is capped 1.5 MB. Request caps reduce work but cannot guarantee no charges on a paid AWS account. Automatic demo reset is disabled. Live GitHub/Modal/Ollama and account-specific cloud behavior remain unverified.
+Local state is a small-workload full-snapshot journal, not an unbounded database. AWS active state is capped 1.5 MB. Request caps reduce work but cannot guarantee no charges on a paid AWS account. Automatic demo reset is disabled. Both apps preserved their approval flow when real local Ollama requests timed out. Successful app-level model advice, live GitHub, Modal and account-specific cloud behavior remain unverified. See [provider verification](docs/verification.md#local-provider-check-on-20-nov).
 
 ## Built with Kiro, continued honestly
 

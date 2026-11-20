@@ -11,4 +11,5 @@ Checked tasks indicate implemented local code; external validation gates remain 
 - [x] 3. Implement and locally exercise quota, prompt boundary and privacy.
   _Requirements: 9.1, 9.2, 9.3, 10.1, 10.2, 10.3, 11.1, 11.2, 11.3, 11.4, 11.5_
 
-- [ ] Complete separately authorized external validation: Live Modal/Ollama response behavior, account terms, model licenses and free allowances remain unverified. The shipped default is none. Local HTTP test doubles establish adapter protocol/failure handling only.
+- [x] Verify the fallback against real local Ollama in both apps. Synthetic events produced pending actions and a valid audit after timeout.
+- [ ] Verify successful model advice through each app at the shipped timeout. Hosted Modal behavior, applicable terms, model licenses and free allowances remain open.

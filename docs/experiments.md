@@ -200,3 +200,12 @@ zsh (this session's shell)
   `lsof` gave `/Users/himanshujha/.local/bin/kiro-cli` as the executable of PID 16673: the same file `kiro-cli` resolves to on PATH, which reports `kiro-cli 3.3.0`. The `kas/` folder also holds 3.0.0 and 3.2.1 bundles, but no running process used them. The bundled Node.js reports v22.23.4. Four `kiro-cli acp --agent-engine=v3` processes were running, started between 21:12:40 and 21:12:53.
 - **Result:** the ACP session runs kiro-cli 3.3.0 with the 3.3.0 agent bundle on the V3 engine. The capability matrix in PLAN.md section 10.1 was written for 3.3.0, so it does not need a re-check for a different version.
 - **Follow-up:** none needed.
+
+
+## E12: Project-root Kiro CLI retry on 20 Nov
+
+The working tree was clean at `eb070b9`. Started Kiro CLI 3.4.0 in the nested repository with the V3 engine and JSON event output. The probe supplied a temporary store containing only the TODO Afterlife fixture. It asked Kiro to list one pending action, explain it through MCP, and attempt a harmless `git commit --dry-run --all` to check automatic hook dispatch. [Official Kiro headless reference](https://kiro.dev/docs/cli/headless/)
+
+- `kiro-cli agent list` found `app-smith` and `skeleton-warden` as workspace V3 agents. Both passed `kiro-cli agent validate --path <file>`. `kiro-cli mcp list` found `aws-docs` and `wraith` for the default agent.
+- The V3 event stream recorded the workspace steering from this repository and entered the prompt stage. The run then exited 1 with `UsageLimitReachedError`. It emitted zero tool or hook call events.
+- Configuration discovery is verified. Both agent rehearsals, automatic hook dispatch in this workspace, the Kiro-hosted MCP call and IDE Correctness remain open. Resume the probe once Kiro usage is available on the account.
