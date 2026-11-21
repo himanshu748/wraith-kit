@@ -1,6 +1,6 @@
 # Wraith Kit demo shotlist
 
-**Target duration: 2:45. Hard stop: before 3:00.** Planned footage only; no recording or upload has occurred. Record the actual local app and real UI interactions. Do not substitute a prototype animation, generated screenshot or fabricated provider response for working footage.
+**Local recording complete.** The 21 Nov export runs **2:05.400** at 1080p with on-screen captions. The video, captions, source recordings and capture notes are in the local `output/demo/` folder. YouTube upload remains pending. The plan below is retained for future takes.
 
 The story is one shared skeleton serving two audiences. The first decision belongs to a developer; the second belongs to a student. Keep a small, readable **LOCAL DEMO · FICTIONAL DATA** label on fixture segments. Issue dry-run must say **DRY-RUN · NO ISSUE CREATED** whenever shown.
 

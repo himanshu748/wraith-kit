@@ -16,7 +16,7 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 - [x] Inspect desktop/mobile layouts, keyboard, reduced motion and JavaScript-disabled forms; retain actual axe and browser results.
 - [x] Confirm both apps import the same unmodified core, and that each app has its own runnable README.
 - [ ] Rehearse the app-authoring guide. Report agent time separately; leave human timing unmeasured until the author actually times it.
-- [x] Reconcile README, app READMEs, `KIRO_USAGE.md`, this checklist and the local demo with the final implementation and known limitations. Clean Git-archive quickstarts passed; actual video remains pending.
+- [x] Reconcile README, app READMEs, `KIRO_USAGE.md`, this checklist and the local demo with the final implementation and known limitations. Clean Git-archive quickstarts passed. The local demo was recorded and verified on 21 Nov.
 
 ## Required Kiro evidence
 
@@ -39,7 +39,7 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 - [x] Validate both AWS templates with `cfn-lint` and the store contract with actual DynamoDB Local. This is local evidence; SAM CLI and AWS deployment have not run.
 - [ ] Deploy only on the author's go after free-tier coverage, account lifetime, quotas, request caps and secrets are verified.
 - [ ] Verify the hosted app URLs as a judge would, including login/access instructions and a fallback local path. Keep required access available through **29 Jan 2027** as planned; verify the actual event access requirements before deployment.
-- [ ] Record and review the actual demo, under **3:00**. No copyrighted music, fabricated screens or unlabelled fixture/provider substitutions.
+- [x] Record and review the actual demo. The local 1080p export runs **2:05** and shows both apps using labelled fictional data, with the resulting patch and calendar downloads. See [the shotlist](VIDEO_SHOTLIST.md).
 - [ ] With publication approval, upload the video to YouTube, make it public and verify anonymous playback. Devpost requires that public YouTube link.
 - [ ] Fill the actual submission fields and limits, confirm the category and bonus selections, and verify every supplied URL. Do not submit without explicit authorization.
 
@@ -48,7 +48,7 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 | Bonus or requirement | Decision | Remaining evidence |
 |---|---|---|
 | Best Student Project: Skeleton Crew | Targeted; solo entry | Author supplies LinkedIn profile, student email, year/degree and school name privately in the form. Current enrollment must be true and proof supplied if requested. None of these details is invented or stored in this repo. |
-| Best Demo | Targeted through the real two-app journey | Final readable video, actual working paths and required public URL. Eligibility/ranking is determined by the organizers; no award claim. |
+| Best Demo | Targeted through the real two-app journey | Local video recorded. Public YouTube URL and hosted app access remain pending. Eligibility/ranking is determined by the organizers; no award claim. |
 | Bonus Blog | Draft prepared | Author-approved public third-party blog post during the submission period, explicitly mentioning Kiroween 2026, and its actual URL. |
 | Social Blitz | Draft prepared for author's rewrite | Post begins with `#KiroweenHackathon26`; author provides their own favourite Kiro feature and concrete effect on the build. Publish within the submission period only on their go and retain the actual URL. |
 | Kiro credits | Author previously reported received/redeemed | Do not request or purchase more automatically. A prior redemption does not imply credits remain available. |

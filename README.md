@@ -97,7 +97,7 @@ Local state is a small-workload full-snapshot journal, not an unbounded database
 
 Kiro authored the plan, foundation, hooks, steering, custom agents, MCP configuration and initial requirements. After its usage-limit interruption, Codex continued the requirements and implementation under the user's instruction. [KIRO_USAGE.md](KIRO_USAGE.md) records which surfaces actually ran, experiment evidence, spec/vibe split, PBT, MCP and remaining IDE/power/custom-agent verification. Config files are not presented as proof that those surfaces executed.
 
-[PLAN.md](PLAN.md) maps features to the five judging criteria. The entry targets Skeleton Crew and Best Student: Skeleton Crew, with eligibility and bonus gates in [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md). Drafts: [Devpost story](DEVPOST_STORY.md), [2:45 video shotlist](VIDEO_SHOTLIST.md), [blog](BLOG_DRAFT.md), [social post](SOCIAL_POST.md). No video recording or external publication is claimed.
+[PLAN.md](PLAN.md) maps features to the five judging criteria. The entry targets Skeleton Crew and Best Student: Skeleton Crew, with eligibility and bonus gates in [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md). Drafts: [Devpost story](DEVPOST_STORY.md), [demo recording and shotlist](VIDEO_SHOTLIST.md), [blog](BLOG_DRAFT.md), [social post](SOCIAL_POST.md). The local demo runs 2:05. YouTube upload and external publication remain pending.
 
 ## Pre-existing work
 

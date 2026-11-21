@@ -47,7 +47,7 @@ The final regenerated queue, digest and mobile confirmation screenshots were ins
 - The real local Ollama timeout path was exercised in both apps on 20 Nov. Successful app-level model advice and live Modal remain unverified. See the provider check below.
 - AWS deployment, account free-tier eligibility, hosted access and public repository visibility remain unverified until their authorized external steps occur.
 - Kiro's prior foundation and experiments are recorded in [KIRO_USAGE.md](../KIRO_USAGE.md) and [experiments.md](experiments.md). The continuation here is Codex-authored; no Kiro IDE Correctness or automatic hook run is inferred from a manual test invocation.
-- No video has been recorded or uploaded. Blog, social and Devpost materials are prepared drafts, not published or submitted artifacts.
+- At the 17 Nov verification checkpoint, video recording and publication were pending. The 21 Nov recording is documented below.
 
 ## Review before commit
 
@@ -76,3 +76,9 @@ Durations include local intake and store writes. The adapter logged `timeout` in
 A standalone invocation of the same adapter with its test timeout set to 60 seconds parsed a genuine reply from a short synthetic prompt in 12.52 s. This verifies the local response and schema parser. App configuration still uses eight seconds, and the two app probes above establish the fallback behavior at that setting.
 
 On 20 Nov the documented app commands also started both default-port demos in model-free mode with separate scratch stores. Both local landing pages returned HTTP 200.
+
+## Demo recording on 21 Nov
+
+The local export at `output/demo/wraith-kit-kiroween.mp4` is 125.400 seconds, 1920 × 1080 and 30 fps. Playwright captured browser interactions against the real app runtime with isolated fictional data and provider `none`. Notice Ghoul polled the loopback fixture site over HTTP. The recording shows the approved patch download, duplicate replay leaving four pending, verified audit, confirmed 5 December 2026 deadline, digest and downloaded calendar. Both downloaded artifacts were checked against the depicted outcomes.
+
+The final MP4 decoded without errors. Frame inspection covered the full timeline and confirmed readable captions and visible fictional-data labels. Sign-in took place off-camera. YouTube upload remains pending.

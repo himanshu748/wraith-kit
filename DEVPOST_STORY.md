@@ -2,7 +2,7 @@
 
 **Tagline:** Small agents that give forgotten work a second life, with a human in the loop.
 
-Draft for the **Skeleton Crew** category and **Best Student Project: Skeleton Crew**, entered solo. This is prepared copy, not a submitted entry. The implementation is local; publication, deployment, a recorded video and live-provider evidence remain separate steps.
+Draft for the **Skeleton Crew** category and **Best Student Project: Skeleton Crew**, entered solo. Both apps run locally, and the 2:05 demo is ready for review. The video upload, deployment, and submission remain pending.
 
 ## Inspiration
 
@@ -64,6 +64,6 @@ Notice Ghoul is an ingestion and reconciliation app inside a reusable skeleton: 
 
 - Public GitHub repository: not published.
 - Working hosted app URLs: not deployed; local run instructions are in the README.
-- Public demo video: not recorded or uploaded.
+- Public demo video: local recording verified at 2:05. YouTube URL pending.
 - Blog and social URLs: drafts prepared, not posted.
 - Student identity and enrollment details: supplied privately by the author in the submission form, never invented or committed here.
