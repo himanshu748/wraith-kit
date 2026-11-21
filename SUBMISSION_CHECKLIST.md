@@ -15,7 +15,7 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 - [x] Exercise Notice Ghoul through fixture polling → repeated/corrected notices → uncertain date → confirmation → digest and `.ics`.
 - [x] Inspect desktop/mobile layouts, keyboard, reduced motion and JavaScript-disabled forms; retain actual axe and browser results.
 - [x] Confirm both apps import the same unmodified core, and that each app has its own runnable README.
-- [ ] Rehearse the app-authoring guide. Report agent time separately; leave human timing unmeasured until the author actually times it.
+- [x] Rehearse the app-authoring guide. A non-Kiro agent ran it on a clean tree on 21 Nov in 5 min 43 s including the full suite ([E13](docs/experiments.md#e13-kiro-retry-on-21-nov-a-labelled-wraith-mcp-call-and-the-guide-rehearsal)). Human timing stays unmeasured; the Kiro `app-smith` rehearsal remains pending under the monthly usage cap.
 - [x] Reconcile README, app READMEs, `KIRO_USAGE.md`, this checklist and the local demo with the final implementation and known limitations. Clean Git-archive quickstarts passed. The local demo was recorded and verified on 21 Nov.
 
 ## Required Kiro evidence
@@ -24,9 +24,9 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 - [x] Codex continuation is identified separately; no Kiro IDE Correctness, Web or Crew use is invented.
 - [ ] Verify the configured project hooks in the actual intended Kiro/T3 workspace. Keep manual script runs distinct from automatic hook events.
 - [ ] Run the custom agents for their substantive intended work and retain the outputs. Configuration validation alone does not prove agent usage.
-- [ ] Demonstrate an actual helpful MCP call and label whether it was a documentation server or the project inspection server.
-- [ ] Answer every rule prompt: surfaces, agents, hooks, spec versus vibe, steering strategy, MCP, property testing and powers. For unused capabilities, say unused.
-- [x] Review the required-tool rule against observed usage. Kiro authored the plan and foundation, and Codex continued implementation. Kiro CLI 3.4.0 discovered both custom agents and both MCP servers on 20 Nov. The usage limit blocked the live turn. Judges determine whether the total Kiro usage is sufficient. See [E12](docs/experiments.md#e12-project-root-kiro-cli-retry-on-20-nov).
+- [x] Demonstrate an actual helpful MCP call and label whether it was a documentation server or the project inspection server. Both kinds are recorded in `KIRO_USAGE.md`: the `aws-docs` documentation server call (17 Nov, DynamoDB docs) and the `wraith` project inspection server call (21 Nov, pending actions, explain, audit verify and extension points over real stdio). Neither was Kiro-hosted; the Kiro-hosted call stays pending under the usage cap.
+- [x] Answer every rule prompt: surfaces, agents, hooks, spec versus vibe, steering strategy, MCP, property testing and powers. `KIRO_USAGE.md` answers each; Kiro IDE, Web, Crew and powers are marked unused, and items blocked by the monthly usage limit say so.
+- [x] Review the required-tool rule against observed usage. Kiro authored the plan and foundation, and Codex continued implementation. Kiro CLI 3.4.0 discovered both custom agents and both MCP servers on 20 Nov; retries on 20 and 21 Nov were blocked by the account monthly usage limit. Judges determine whether the total Kiro usage is sufficient. See [E12](docs/experiments.md#e12-project-root-kiro-cli-retry-on-20-nov) and [E13](docs/experiments.md#e13-kiro-retry-on-21-nov-a-labelled-wraith-mcp-call-and-the-guide-rehearsal).
 
 ## Release and external actions
 

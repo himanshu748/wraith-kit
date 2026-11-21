@@ -2,7 +2,7 @@
 
 Build a small app that turns a study-room request into a reviewed local task. You need a supported Node version (22.13+, 24 or 26), npm, and this repository with `npm install` completed. No account, key, model or external service is needed.
 
-“15 min” is a goal, not a measured promise. **Human timing not measured.** The scaffold, generated core journey and actual local runner sign-in/approval/download have automated smoke coverage; a timed app-smith rehearsal on a clean tree is still pending.
+“15 min” is a goal, not a measured promise. **Human timing not measured.** The scaffold, generated core journey and actual local runner sign-in/approval/download have automated smoke coverage. A non-Kiro agent rehearsed the guide end to end on 21 Nov 2026 in 5 min 43 s ([E13](experiments.md#e13-kiro-retry-on-21-nov-a-labelled-wraith-mcp-call-and-the-guide-rehearsal)); a timed Kiro app-smith rehearsal on a clean tree is still pending under the account's monthly usage limit.
 
 ## 1. Scaffold and run
 
@@ -75,4 +75,4 @@ If the contract lacks a capability, propose and test a shared extension in the s
 
 The scaffold test creates a temporary app, runs its module through the real shared engine in a separate Node process, checks replay and approval, and removes only that generated folder. A second subprocess starts the generated local runner, follows its one-time sign-in link, submits a CSRF-protected approval and downloads the real artifact over HTTP. Separate tests prove invalid names, existing destinations and symlinked app roots are refused. This is automated smoke validation, not a timed human run or a Kiro app-smith execution.
 
-For the planned rehearsal, start with a clean committed tree, record start and finish times, ask the configured Kiro `app-smith` to follow this guide in `apps/scratch-<name>/`, and report each command's result. Keep agent elapsed time separate from human time. The main session inspects and removes scratch work after the rehearsal; never commit a scratch app. Preserve unrelated changes and review any lockfile edits rather than restoring them blindly.
+A non-Kiro agent rehearsal ran on 21 Nov 2026 ([E13](experiments.md#e13-kiro-retry-on-21-nov-a-labelled-wraith-mcp-call-and-the-guide-rehearsal)): clean tree, `date`-timed 5 min 43 s, scratch app `apps/scratch-study/` removed afterwards and never committed. For the still-planned Kiro rehearsal, start with a clean committed tree, record start and finish times, ask the configured Kiro `app-smith` to follow this guide in `apps/scratch-<name>/`, and report each command's result. Keep agent elapsed time separate from human time. The main session inspects and removes scratch work after the rehearsal; never commit a scratch app. Preserve unrelated changes and review any lockfile edits rather than restoring them blindly.

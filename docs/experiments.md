@@ -209,3 +209,39 @@ The working tree was clean at `eb070b9`. Started Kiro CLI 3.4.0 in the nested re
 - `kiro-cli agent list` found `app-smith` and `skeleton-warden` as workspace V3 agents. Both passed `kiro-cli agent validate --path <file>`. `kiro-cli mcp list` found `aws-docs` and `wraith` for the default agent.
 - The V3 event stream recorded the workspace steering from this repository and entered the prompt stage. The run then exited 1 with `UsageLimitReachedError`. It emitted zero tool or hook call events.
 - Configuration discovery is verified. Both agent rehearsals, automatic hook dispatch in this workspace, the Kiro-hosted MCP call and IDE Correctness remain open. Resume the probe once Kiro usage is available on the account.
+
+
+## E13: Kiro retry on 21 Nov, a labelled wraith MCP call, and the guide rehearsal
+
+### Kiro retry
+
+Re-ran the E12 probe at 11:26 UTC from `wraith-kit/` with `--agent-engine v3 --no-interactive --trust-workspace --require-mcp-startup --trust-tools=execute_bash,fs_write,fs_read,@wraith --output-format stream-json`. The run emitted 20 stream events, reached the prompt stage and exited 1. stderr shows `ServiceQuotaExceededException` with reason `MONTHLY_REQUEST_COUNT`. Zero tool or hook events fired, so automatic hook dispatch, the agent rehearsals and a Kiro-hosted MCP call remain open. The account's monthly allowance is still exhausted; resume the probe when it resets.
+
+### Labelled MCP call (project inspection server, not Kiro-hosted)
+
+`npm run demo:todo` seeded `.wraith/todo-afterlife`. The wraith server was then launched exactly as `.kiro/settings/mcp.json` launches it (`node --import tsx scripts/mcp.ts todo-afterlife` with `WRAITH_LLM_PROVIDER=none`) and driven over its real stdio JSON-RPC transport:
+
+- `initialize` returned protocol `2025-06-18`, server `wraith 0.1.0`.
+- `tools/list` returned the six read-only tools (`list_events`, `list_pending_actions`, `explain_action`, `simulate_event`, `verify_audit`, `list_extension_points`), each with `readOnlyHint: true` and `taskSupport: forbidden`.
+- `tools/call list_pending_actions` returned the seeded DEMO proposals, including action `1a490c86...1467` (kind `retire`, status `proposed`).
+- `tools/call explain_action` on that id returned the rule trace (`tracked-issues`, `vague-phrase`, `too-short`, `no-owner`, `no-anchor`, `retire-candidate`, `propose-outcomes`), its patch preview and audit entries.
+- `tools/call verify_audit` returned `{"valid":true,"seq":8}`.
+- `tools/call list_extension_points` returned the app's real registrations: sources `github` and `cli`, seven rules, actions `rewrite`, `retire`, `open-issue`, record `tracked-issues`, advisor `reword`.
+
+This is the project inspection server (read-only state), not a documentation server. It was not hosted by Kiro; the Kiro-hosted call is still pending under the usage cap. The earlier `aws-docs` documentation call (17 Nov) remains the documentation-server evidence.
+
+### Guide rehearsal (agent run, scratch app, not committed)
+
+Followed `docs/make-your-own-app-in-15-min.md` on a clean tree at commit `9601da5`, substituting the rehearsal name `scratch-study` for the guide's example `study-helper` (the rehearsal rules require `apps/scratch-<short-name>/`):
+
+- `date` start: 2026-11-21T11:29:32Z.
+- `npm run new-app -- scratch-study` created `apps/scratch-study/`; no lockfile or shared-source change (`git status` clean apart from the new folder).
+- The generated `src/index.ts` imports only `@wraith-kit/skeleton/core` exports (`defineApp`, `hash`, `EventInput`).
+- `npx vitest run apps/scratch-study/test`: 1 test passed (double-ingest, approve, one artifact).
+- `npx vitest run tests/core-integrity.test.ts`: 4 tests passed.
+- Real local journey: `WRAITH_OPEN_BROWSER=0 PORT=4330 npx tsx apps/scratch-study/run.ts`, followed the printed one-time sign-in link (HTTP 303, session cookie), listed the queue (`/queue` showed one pending DEMO task), inspected the action page, posted the CSRF-protected `decision=approve` form (303 redirect), and downloaded `GET /actions/<id>/download` (200, `text/plain`), whose content was `DEMO task\nReplace the printer paper before the study group meets.`
+- `npm test`: first run reported 355 passed, 5 skipped (DynamoDB) and 1 failure in the `it.each` unsafe-commit-form case in `tests/hooks/scripts.test.ts` (the `tempRepo`/`guard` path around line 141). The same file passed 234/234 on an isolated re-run and the full suite passed on a second run, so the single failure was flaky, not a regression from the scratch app.
+- `date` end: 2026-11-21T11:35:15Z. Agent elapsed time: 5 min 43 s including the full suite.
+- Cleanup: removed `apps/scratch-study/`, the temporary data dir and the generated login-link file; `git status` clean.
+
+Result: the guide's steps work as written for an agent. Agent time 5m43s; human timing remains unmeasured, and the Kiro `app-smith` rehearsal is still pending under the usage cap.
