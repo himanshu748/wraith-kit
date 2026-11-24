@@ -30,10 +30,10 @@ Official rules checked 20 Nov 2026: [Kiroween rules](https://kiroween.devpost.co
 
 ## Release and external actions
 
-- [ ] On the author's go, publish the project to public **GitHub**. Verify anonymous access to source, assets and setup instructions.
-- [ ] Verify GitHub detects the OSI-approved license and displays it in the repository About area. A local `LICENSE` file does not establish target-side detection.
-- [ ] Confirm `.kiro` is visible at the published repository root, with specs, hooks and steering included.
-- [ ] Compare every incorporated library/template/tool with README **Pre-existing work**, including versions and licenses; confirm no older project code was copied.
+- [x] On the author's go, publish the project to public **GitHub**. Published 21 Nov to [himanshu748/wraith-kit](https://github.com/himanshu748/wraith-kit); anonymous HTTP 200 on the repo page, raw `README.md` and raw `.kiro` files.
+- [x] Verify GitHub detects the OSI-approved license and displays it in the repository About area. The repository API reports `license: MIT` after the push on 21 Nov.
+- [x] Confirm `.kiro` is visible at the published repository root, with specs, hooks and steering included. The contents API lists `agents`, `hooks`, `settings`, `specs` and `steering` under `.kiro` on `main`.
+- [x] Compare every incorporated library/template/tool with README **Pre-existing work**, including versions and licenses; confirm no older project code was copied. All 16 npm packages across root and app manifests map to table rows, the skeleton has zero runtime dependencies and the `deps-in-readme` guard check passes.
 - [ ] On separate authorization, create/configure the sandbox repository, restricted token and webhook. Record a real push → approval → real `[DEMO]` issue result before claiming live GitHub operation.
 - [ ] If optional Modal inference will be shown, verify applicable free credits and a no-spend configuration, then retain a real provider result. Otherwise keep `none`; no LLM key is required for the local demonstration.
 - [x] Validate both AWS templates with `cfn-lint` and the store contract with actual DynamoDB Local. This is local evidence; SAM CLI and AWS deployment have not run.

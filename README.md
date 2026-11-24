@@ -86,7 +86,7 @@ Without that variable, the DynamoDB cases are visibly skipped. They were also ru
 
 ## AWS and public URLs
 
-Both apps have SAM templates for Lambda Function URLs, DynamoDB and scheduled ticks. Bundles build and templates pass offline lint. [AWS deployment instructions](docs/aws-deployment.md) explain free-usage checks, secrets and the owner-run commands. No deployment, repository publication, social post or submission has occurred.
+Both apps have SAM templates for Lambda Function URLs, DynamoDB and scheduled ticks. Bundles build and templates pass offline lint. [AWS deployment instructions](docs/aws-deployment.md) explain free-usage checks, secrets and the owner-run commands. The source is public at [github.com/himanshu748/wraith-kit](https://github.com/himanshu748/wraith-kit). No deployment, social post or submission has occurred.
 
 - TODO Afterlife hosted URL: `<todo-afterlife-function-url>` (awaiting authorized deployment).
 - Notice Ghoul hosted URL: `<notice-ghoul-function-url>` (awaiting authorized deployment).

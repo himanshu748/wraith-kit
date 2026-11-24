@@ -167,7 +167,7 @@ The interrupted approval-ui and llm-adapter drafts were preserved and committed.
 
 Before each commit, typecheck, lint, the 266-test suite and the staged commit guard passed. The guard also checked secrets, environment files, dependency attribution, licensing and `.kiro` visibility. Its core-integrity and fixture-demo-label checks were explicitly skipped because the apps did not exist at that earlier checkpoint. Those earlier results established only tooling and requirement format. The subsequent implementation evidence is distinct below.
 
-The official Kiroween rules were reread on 17 Nov; the page records a 16 Nov eligibility update for Australia and still gives 4 Dec 2026 at 2:00 PM Pacific as the deadline. This continuation did not change the approved category or submission plan. Publication and submission have not occurred.
+The official Kiroween rules were reread on 17 Nov; the page records a 16 Nov eligibility update for Australia and still gives 4 Dec 2026 at 2:00 PM Pacific as the deadline. This continuation did not change the approved category or submission plan. The repository was published to public GitHub on 21 Nov 2026; submission has not occurred.
 
 ## 17 Nov implementation continuation
 

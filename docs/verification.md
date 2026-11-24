@@ -45,7 +45,7 @@ The final regenerated queue, digest and mobile confirmation screenshots were ins
 
 - Fixture notices and source comments are synthetic demo data. GitHub issue creation without configured credentials is a dry-run; no real public issue was created by that path.
 - The real local Ollama timeout path was exercised in both apps on 20 Nov. Successful app-level model advice and live Modal remain unverified. See the provider check below.
-- AWS deployment, account free-tier eligibility, hosted access and public repository visibility remain unverified until their authorized external steps occur.
+- AWS deployment, account free-tier eligibility and hosted access remain unverified until their authorized external steps occur. Public repository visibility was verified on 21 Nov: anonymous HTTP 200 on the repo page and raw files, GitHub-reported license `MIT`, `.kiro` contents listed at the root.
 - Kiro's prior foundation and experiments are recorded in [KIRO_USAGE.md](../KIRO_USAGE.md) and [experiments.md](experiments.md). The continuation here is Codex-authored; no Kiro IDE Correctness or automatic hook run is inferred from a manual test invocation.
 - At the 17 Nov verification checkpoint, video recording and publication were pending. The 21 Nov recording is documented below.
 
