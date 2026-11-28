@@ -31,6 +31,8 @@ both extracted apps in one Chromium context before uploading the archive.
 The browser test uses `zip` and `unzip`. The archive includes bundled dependency
 licenses, including [boolbase’s upstream ISC license](https://github.com/fb55/boolbase/blob/master/LICENSE), which its npm tarball omits.
 
+See the [judge release workflow](docs/judge-release.md) for verification of the CI-built ZIP and the [Vercel setup](docs/hosted-todo.md) for running TODO Afterlife with isolated fictional workspaces.
+
 ## Run from source
 
 Use Node 22.13+ (verified on 22.14 and 26.12) and npm. From this directory:
@@ -127,6 +129,7 @@ Build additions (all direct dependencies; no app starter template):
 | `@wraith-kit/skeleton` | 0.1.0 | MIT | First-party workspace package authored here |
 | `@aws-sdk/client-dynamodb`, `@aws-sdk/lib-dynamodb`, `@aws-sdk/client-lambda`, `@aws-sdk/client-ssm` | 3.1170.0 | Apache-2.0 | AWS adapters |
 | `@modelcontextprotocol/sdk` | 1.32.2 | MIT | Read-only MCP server |
+| `@vercel/blob` | 2.9.0 | Apache-2.0 | Private storage for hosted TODO workspaces |
 | `zod` | 4.6.7 | MIT | Boundary validation |
 | `cheerio` | 1.2.0 | MIT | Notice HTML/XML parser |
 | `esbuild` | 0.28.2 | MIT | Lambda bundler |
