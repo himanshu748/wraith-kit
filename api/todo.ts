@@ -29,7 +29,8 @@ let handle: ReturnType<typeof createHostedTodo> | undefined;
 export default {
   fetch(request: Request) {
     const secret = process.env.WRAITH_HOSTED_SECRET;
-    if (!secret || secret.length < 32 || !process.env.BLOB_READ_WRITE_TOKEN) {
+    const blobConnected = process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN;
+    if (!secret || secret.length < 32 || !blobConnected) {
       return new Response('Demo workspace storage is unavailable.', { status: 503, headers: { 'Cache-Control': 'no-store' } });
     }
     handle ??= createHostedTodo(secret, storage);

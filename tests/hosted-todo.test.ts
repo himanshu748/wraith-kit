@@ -45,6 +45,9 @@ test('isolates hosted TODO approvals and patch downloads across visitors', async
   const form = new URLSearchParams({ csrf: csrf!, decision: 'approve' });
   const decision = '/actions/' + action.id + '/decision';
   expect((await post(decision, form, second)).status).toBe(403);
+  const replay = await post('/demo', new URLSearchParams({ csrf: csrf! }), first);
+  expect(replay.status).toBe(303);
+  expect(replay.headers.get('location')).toContain('/queue?notice=');
   expect((await post(decision, form, first)).status).toBe(303);
 
   const download = '/actions/' + action.id + '/download';

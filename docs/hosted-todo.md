@@ -6,8 +6,9 @@ The demo uses no GitHub credentials or model provider. Issue approvals are
 dry runs.
 
 1. Import this repository into a Vercel Hobby project using the repository root.
-2. Create a private Vercel Blob store and connect it to the project. The
-   function uses the connected `BLOB_READ_WRITE_TOKEN` variable.
+2. Create a private Vercel Blob store and connect it to the project with the
+   default OIDC connection. Vercel supplies `BLOB_STORE_ID` for the SDK.
+   Existing connections using `BLOB_READ_WRITE_TOKEN` also work.
 3. Set a randomly generated production `WRAITH_HOSTED_SECRET` of at least
    32 characters, then deploy. Keep the secret stable while demo sessions
    are active.

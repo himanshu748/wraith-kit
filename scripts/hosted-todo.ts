@@ -58,8 +58,8 @@ export function createHostedTodo(secret: string, storage: WorkspaceStorage) {
 
     const start = request.method === 'POST' && route === '/start';
     const page = read && (/^\/(?:|queue|audit|settings|actions\/[\da-f]{64}(?:\/download)?|patches\/[\da-f]{64}\.patch)$/.test(route));
-    const decision = request.method === 'POST' && /^\/(?:logout|actions\/[\da-f]{64}\/decision)$/.test(route);
-    if (!start && !page && !decision) return text('Not found', 404);
+    const form = request.method === 'POST' && /^\/(?:demo|logout|actions\/[\da-f]{64}\/decision)$/.test(route);
+    if (!start && !page && !form) return text('Not found', 404);
     if (!read && request.headers.get('origin') !== url.origin) return text('Cross-origin request refused', 403);
 
     const id = start ? randomBytes(24).toString('hex') : visitor(request);
@@ -80,7 +80,7 @@ export function createHostedTodo(secret: string, storage: WorkspaceStorage) {
       const loginToken = start ? randomBytes(32).toString('hex') : undefined;
       const handle = createHttpHandler({
         app, store, engine, loginToken, loginRole: 'demo', sessionKey: key('session', id),
-        hosted: true, demo: true, publicDemo: false,
+        hosted: true, demo: true, publicDemo: false, demoEvents: todoDemoEvents,
       });
       if (start) {
         for (const event of todoDemoEvents()) await engine.ingest(event);
