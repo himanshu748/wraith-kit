@@ -1,4 +1,4 @@
-import { BlobPreconditionFailedError, get, put } from '@vercel/blob';
+import { BlobNotFoundError, BlobPreconditionFailedError, get, head, put } from '@vercel/blob';
 import { createHostedTodo, type WorkspaceStorage } from './hosted-todo.js';
 import type { Snapshot } from '@wraith-kit/skeleton/core';
 
@@ -6,10 +6,17 @@ const pathname = (id: string) => `wraith-todo/v1/${id}.json`;
 
 const storage: WorkspaceStorage = {
   async read(id) {
-    const object = await get(pathname(id), { access: 'private', useCache: false });
+    const path = pathname(id);
+    // Read the Blob API's compare-and-swap token before fetching origin bytes.
+    const metadata = await head(path).catch(error => {
+      if (error instanceof BlobNotFoundError) return undefined;
+      throw error;
+    });
+    if (!metadata) return;
+    const object = await get(path, { access: 'private', useCache: false });
     if (!object) return;
     if (object.statusCode !== 200) throw new Error('Expected a current snapshot');
-    return { etag: object.blob.etag, snapshot: await new Response(object.stream).json() as Snapshot };
+    return { etag: metadata.etag, snapshot: await new Response(object.stream).json() as Snapshot };
   },
   async write(id, snapshot, etag) {
     try {
