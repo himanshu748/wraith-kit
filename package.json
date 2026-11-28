@@ -20,6 +20,7 @@
     "demo:todo": "tsx scripts/replay.ts todo-afterlife",
     "demo:notices": "tsx scripts/replay.ts notice-ghoul",
     "build": "node --import tsx scripts/build.ts",
+    "build:judge": "node scripts/build-judge.mjs",
     "core:budget": "node scripts/core-budget.mjs",
     "new-app": "tsx scripts/new-app.ts",
     "test:e2e": "playwright test",

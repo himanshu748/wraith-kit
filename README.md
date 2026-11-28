@@ -24,6 +24,13 @@ node wraith.mjs notice-ghoul
 
 Use the one-time link each command opens. In TODO Afterlife, approve a rewrite and download the patch. In Notice Ghoul, confirm a proposed date and download the calendar from Daily digest. The [recorded browser proof](docs/proof/judge-approval-run.json) documents both artifact downloads and audit results with fictional data.
 
+Build an offline ZIP from a source checkout on Linux or macOS with `zip` installed.
+Run `npm ci`, then `npm run build:judge`. The archive is written to
+`output/wraith-kit-judge.zip`. CI builds it twice, compares checksums, and runs
+both extracted apps in one Chromium context before uploading the archive.
+The browser test uses `zip` and `unzip`. The archive includes bundled dependency
+licenses, including [boolbase’s upstream ISC license](https://github.com/fb55/boolbase/blob/master/LICENSE), which its npm tarball omits.
+
 ## Run from source
 
 Use Node 22.13+ (verified on 22.14 and 26.12) and npm. From this directory:
