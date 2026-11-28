@@ -27,7 +27,8 @@ export function artifacts(actions: readonly Action[]): Map<string, {content:stri
 }
 export function createHttpHandler(options: HttpOptions): (request: Request) => Promise<Response> {
   const {app,engine,store}=options;
-  const cookieName=options.hosted?'__Host-wraith':'wraith';
+  // Cookies are shared across ports, including the two local demo servers.
+  const cookieName=options.hosted?'__Host-wraith':`wraith-${app.id}`;
   const mac=(value:string)=>createHmac('sha256',options.sessionKey).update(value).digest('hex');
   const cookie=(token:string,age=28_800)=>`${cookieName}=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${age}${options.hosted?'; Secure':''}`;
   const issue=(authenticated:boolean,role='admin')=>{const body=Buffer.from(JSON.stringify({id:randomBytes(24).toString('hex'),exp:Date.now()+28_800_000,auth:authenticated,role})).toString('base64url');return `${body}.${mac(body)}`;};
@@ -40,7 +41,10 @@ export function createHttpHandler(options: HttpOptions): (request: Request) => P
     if(url.pathname==='/health')return respond('ok',200,'text/plain');
     if(url.pathname==='/assets/wraith.css')return respond(stylesheet,200,'text/css');
     if(url.pathname==='/assets/wraith.js')return respond(enhancementScript,200,'text/javascript');
-    const found=request.headers.get('cookie')?.split(';').map(x=>x.trim()).find(x=>x.startsWith(`${cookieName}=`))?.slice(cookieName.length+1)??'';
+    const cookies=request.headers.get('cookie')?.split(';').map(x=>x.trim())??[];
+    const currentCookie=cookies.find(x=>x.startsWith(`${cookieName}=`))?.slice(cookieName.length+1);
+    const legacyCookie=options.hosted?undefined:cookies.find(x=>x.startsWith('wraith='))?.slice('wraith='.length);
+    const found=currentCookie??legacyCookie??'';
     let session=decode(found);let token=found;
     if(!session){token=issue(false);session=decode(token)!;}
     const state=await store.read();

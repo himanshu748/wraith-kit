@@ -65,3 +65,38 @@ test('approval remains usable with JavaScript disabled',async({browser})=>{
  const server=await startLocalServer({...runtime,openBrowser:false,tickMs:60000});const context=await browser.newContext({javaScriptEnabled:false});
  try{const page=await context.newPage();await page.goto((await readFile(server.loginFile,'utf8')).trim());const action=Object.values((await runtime.store.read()).actions).find(a=>a.kind==='rewrite')!;await page.goto(server.origin+'/actions/'+action.id);await page.getByRole('button',{name:'Approve',exact:true}).click();await expect(page.getByRole('link',{name:'Download patch'})).toBeVisible();expect((await runtime.store.read()).actions[action.id].status).toBe('succeeded');}finally{await context.close();await server.close();await rm(dir,{recursive:true,force:true});}
 });
+
+test('both local apps stay signed in when opened in the same browser', async ({ browser }) => {
+ const directory = await mkdtemp(join(tmpdir(), 'wraith-two-apps-'));
+ const context = await browser.newContext();
+ const servers: Awaited<ReturnType<typeof startLocalServer>>[] = [];
+ try {
+  const pages: Page[] = [];
+  for (const id of ['todo-afterlife', 'notice-ghoul'] as const) {
+   const runtime = await createRuntime(id, {
+    dataDir: join(directory, id, 'data'),
+    configDir: join(directory, id, 'config'),
+   });
+   const server = await startLocalServer({ ...runtime, openBrowser: false });
+   servers.push(server);
+   const page = await context.newPage();
+   pages.push(page);
+   await page.goto((await readFile(server.loginFile, 'utf8')).trim());
+   await expect(page).toHaveURL(server.origin + '/queue');
+  }
+
+  const [todo, notices] = pages;
+  const [todoServer, noticeServer] = servers;
+  await todo.goto(todoServer.origin + '/queue');
+  await expect(todo).toHaveURL(todoServer.origin + '/queue');
+  await notices.getByRole('button', { name: 'Sign out' }).click();
+  await notices.goto(noticeServer.origin + '/queue');
+  await expect(notices).toHaveURL(noticeServer.origin + '/login');
+  await todo.reload();
+  await expect(todo).toHaveURL(todoServer.origin + '/queue');
+ } finally {
+  await context.close();
+  await Promise.all(servers.map(server => server.close()));
+  await rm(directory, { recursive: true, force: true });
+ }
+});
