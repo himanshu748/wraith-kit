@@ -33,3 +33,8 @@ jobs:
           name: wraith-browser-demo
           path: output/playwright/*.png
           if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: wraith-judge-build
+          path: output/wraith-kit-judge.zip
+          if-no-files-found: error
