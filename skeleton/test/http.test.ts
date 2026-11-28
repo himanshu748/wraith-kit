@@ -12,7 +12,10 @@ it('private data, one-time login, CSRF, stale decisions and sign-out through HTT
  expect((await send('/queue')).status).toBe(303);
  const login=await send('/auth?token='+loginToken);expect(login.status).toBe(303);const cookie=login.headers.get('set-cookie')!.split(';')[0];
  expect((await send('/auth?token='+loginToken)).status).toBe(400);
- const queue=await send('/queue',{headers:{cookie}});const html=await queue.text();expect(html).toContain('&lt;script&gt;');expect(html).not.toContain('<script>hostile');
+ expect(cookie.startsWith('wraith-http-test=')).toBe(true);
+ const legacyCookie=cookie.replace('wraith-http-test=','wraith=');
+ const queue=await send('/queue',{headers:{cookie:legacyCookie}});const html=await queue.text();expect(html).toContain('&lt;script&gt;');expect(html).not.toContain('<script>hostile');
+ expect(queue.headers.get('set-cookie')).toMatch(/^wraith-http-test=/);
  const csrf=/name="csrf" value="([^"]+)"/.exec(html)?.[1];expect(csrf).toBeTruthy();const id=Object.keys((await engine.snapshot()).actions)[0];
  const decision='/actions/'+id+'/decision';expect((await send(decision,{method:'POST',headers:{cookie},body:'decision=approve'})).status).toBe(403);
  expect((await send(decision,{method:'POST',headers:{cookie,origin:'https://other.invalid'},body:new URLSearchParams({csrf:csrf!,decision:'approve'})})).status).toBe(403);
