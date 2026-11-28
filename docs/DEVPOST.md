@@ -29,5 +29,5 @@ Headless Kiro CLI V3 experiments captured actual hook payloads and exit-2 blocki
 | Functional test build | [GitHub release](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) |
 | Judge instructions | The two launch commands and approval steps above |
 | Pre-existing work | [Dependency and license disclosures](../README.md#pre-existing-work) |
-| Public video | Enter the verified public YouTube walkthrough URL |
+| Video | [YouTube walkthrough](https://youtu.be/XldHuxVLAEQ) (1:12) |
 | Eligibility and survey responses | Entrant completes personal and bonus fields |

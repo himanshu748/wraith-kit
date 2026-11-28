@@ -2,7 +2,7 @@
 
 **Small agents. Human judgment.** A TypeScript skeleton that turns webhooks and feeds into explainable proposals, asks before consequential actions, and remembers what happened.
 
-**[Download both apps for judging](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-test-build.zip)** · [Release instructions](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Judge guide](docs/DEVPOST.md)
+**[Download both apps for judging](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-test-build.zip)** · [Release instructions](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Watch the 1:12 walkthrough](https://youtu.be/XldHuxVLAEQ) · [Judge guide](docs/DEVPOST.md)
 
 Two working apps demonstrate the same unmodified core:
 
@@ -98,7 +98,7 @@ Local state is a small-workload full-snapshot journal, not an unbounded database
 
 Kiro authored the plan, foundation, hooks, steering, custom agents, MCP configuration and initial requirements. After its usage-limit interruption, Codex continued the requirements and implementation under the user's instruction. [KIRO_USAGE.md](KIRO_USAGE.md) records which surfaces actually ran, experiment evidence, spec/vibe split, PBT, MCP and remaining IDE/power/custom-agent verification. Config files are not presented as proof that those surfaces executed.
 
-[PLAN.md](PLAN.md) maps features to the five judging criteria. The entry targets Skeleton Crew and Best Student: Skeleton Crew, with eligibility and bonus gates in [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md). Drafts: [Devpost story](DEVPOST_STORY.md), [demo recording and shotlist](VIDEO_SHOTLIST.md), [blog](BLOG_DRAFT.md), [social post](SOCIAL_POST.md). The local demo runs 2:05. YouTube upload and external publication remain pending.
+[PLAN.md](PLAN.md) maps features to the five judging criteria. The entry targets Skeleton Crew and Best Student: Skeleton Crew, with eligibility and bonus gates in [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md). Drafts: [Devpost story](DEVPOST_STORY.md), [demo recording and shotlist](VIDEO_SHOTLIST.md), [blog](BLOG_DRAFT.md), [social post](SOCIAL_POST.md).
 
 ## Pre-existing work
 
