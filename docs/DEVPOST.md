@@ -1,6 +1,6 @@
 # Wraith Kit judge guide
 
-**Kiroween 2026 category:** Skeleton Crew. [Official rules](https://kiroween.devpost.com/rules) · [Public test build](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Download ZIP](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-test-build.zip)
+**Kiroween 2026 category:** Skeleton Crew. [Official rules](https://kiroween.devpost.com/rules) · [Public test build](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Download ZIP](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-fixed-build.zip)
 
 Wraith Kit is a shared TypeScript runtime for agents that explain their proposals, ask before consequential actions and record the outcome. TODO Afterlife proposes a patch from a vague TODO. Notice Ghoul proposes a date from a student notice and exports a confirmed calendar entry.
 
