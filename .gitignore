@@ -32,3 +32,6 @@ dynamodb-local-metadata.json
 
 # Raw browser captures; selected reviewed images are in docs/images
 output/
+
+# Generated Vercel server bundle
+/scripts/vercel-todo-bundle.mjs

@@ -2,27 +2,27 @@
 
 **Small agents. Human judgment.** A TypeScript skeleton that turns webhooks and feeds into explainable proposals, asks before consequential actions, and remembers what happened.
 
-**[Download both apps for judging](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-fixed-build.zip)** · [Release instructions](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Watch the 1:12 walkthrough](https://youtu.be/XldHuxVLAEQ) · [Judge guide](docs/DEVPOST.md) · [Submitted Kiroween entry](https://devpost.com/software/wraith-kit-mrt2yp)
+**[Try TODO Afterlife live](https://wraith-kit.vercel.app/)** · [Verified judge release](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-ci-73ab9be) · [Watch the 1:12 walkthrough](https://www.youtube.com/watch?v=hltMBkDhLOU) · [Judge guide](docs/DEVPOST.md) · [Submitted Kiroween entry](https://devpost.com/software/wraith-kit-mrt2yp)
 
 Two working apps demonstrate the same unmodified core:
 
 | App | For | Try it |
 |---|---|---|
-| [TODO Afterlife](apps/todo-afterlife/README.md) | Developers | Turn a vague TODO into a reviewable patch or a proposed GitHub issue |
-| [Notice Ghoul](apps/notice-ghoul/README.md) | Students | Resolve an uncertain deadline, read a daily digest and download a calendar |
+| [TODO Afterlife](apps/todo-afterlife/README.md) | Developers | [Hosted demo](https://wraith-kit.vercel.app/). Turn a vague TODO into a reviewable patch or a proposed GitHub issue |
+| [Notice Ghoul](apps/notice-ghoul/README.md) | Students | **Offline in the judge ZIP.** Resolve an uncertain deadline, read a daily digest and download a calendar |
 
-![TODO Afterlife approval queue with clearly labelled fictional demo data](docs/images/todo-afterlife-queue.png)
+![Approved TODO rewrite with a downloadable patch](docs/images/judge-todo-approved.png)
 
-## Try the public test build
+## Run both apps offline
 
-Download and unzip the release above. With Node.js 22.13 or newer, run the two commands from the extracted directory in separate terminals. The release has no npm install, account or API key requirement.
+[Download the verified judge ZIP](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-ci-73ab9be/wraith-kit-judge.zip) and unzip it. With Node.js 22.13 or newer, run the two commands from the extracted directory in separate terminals. The release has no npm install, account or API key requirement.
 
 ```sh
 node wraith.mjs todo-afterlife
 node wraith.mjs notice-ghoul
 ```
 
-Use the one-time link each command opens. In TODO Afterlife, approve a rewrite and download the patch. In Notice Ghoul, confirm a proposed date and download the calendar from Daily digest. The [recorded browser proof](docs/proof/judge-approval-run.json) documents both artifact downloads and audit results with fictional data.
+Use the one-time link each command opens. In TODO Afterlife, approve a rewrite and download the patch. In Notice Ghoul, confirm a proposed date and download the calendar from Daily digest. The [release build’s Chromium test](https://github.com/himanshu748/wraith-kit/actions/runs/46168741325/job/141052094436) exercised the patch and calendar downloads from the exact archive.
 
 Build an offline ZIP from a source checkout on Linux or macOS with `zip` installed.
 Run `npm ci`, then `npm run build:judge`. The archive is written to
