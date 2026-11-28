@@ -5,7 +5,7 @@ import { renderPage, stylesheet, enhancementScript, type UiModel } from '../ui/i
 import { reserveQuota } from './quotas.js';
 export interface HttpOptions {
   app: App; engine: Engine; store: Store; sessionKey: string; hosted?: boolean;
-  publicDemo?: boolean; demo?: boolean; loginToken?: string; adminToken?: string; demoCode?: string;
+  publicDemo?: boolean; demo?: boolean; loginToken?: string; loginRole?: 'admin' | 'demo'; adminToken?: string; demoCode?: string;
   demoEvents?: () => EventInput[]; provider?: UiModel['provider'] | (() => UiModel['provider']);
   afterAccept?: () => void | Promise<void>; fixtureFiles?: Record<string, {content:string;type:string}>;
 }
@@ -68,7 +68,7 @@ export function createHttpHandler(options: HttpOptions): (request: Request) => P
       if(url.pathname==='/auth'&&request.method==='GET'){
         const supplied=url.searchParams.get('token')??'';
         if(!loginHash||!equal(digest(supplied),loginHash))return respond('Invalid sign-in link',401,'text/plain');
-        const auth=issue(true);const parsed=decode(auth)!;
+        const auth=issue(true,options.loginRole);const parsed=decode(auth)!;
         await updateMeta(store,meta=>{if(meta.loginUsed===loginHash)throw new Error('Sign-in link already used');meta.loginUsed=loginHash;const list=meta.sessions as JsonObject|undefined;meta.sessions={...list,[digest(parsed.id)]:parsed.exp};});
         return redirect('/queue',auth);
       }

@@ -1,0 +1,43 @@
+name: Stage verified judge release
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/judge-release.yml
+      - scripts/stage-judge-release.sh
+  workflow_dispatch:
+    inputs:
+      stage_release:
+        description: Create an unpublished draft with the verified assets
+        type: boolean
+        default: false
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    if: github.event_name == 'pull_request' || !inputs.stage_release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: bash scripts/stage-judge-release.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+  stage:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.stage_release
+    runs-on: ubuntu-latest
+    concurrency: wraith-kiroween-ci-release
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: bash scripts/stage-judge-release.sh --draft
+        env:
+          GH_TOKEN: ${{ github.token }}

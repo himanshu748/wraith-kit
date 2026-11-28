@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "npm run typecheck && mkdir -p public",
+  "outputDirectory": "public",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/todo",
+      "transforms": [
+        {
+          "type": "request.query",
+          "op": "set",
+          "target": { "key": "_wraithRoute" },
+          "args": "/$1"
+        }
+      ]
+    }
+  ]
+}
