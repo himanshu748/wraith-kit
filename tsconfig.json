@@ -18,6 +18,7 @@
   },
   "include": [
     "scripts",
+    "api",
     "tests",
     "*.ts",
     "eslint.config.js",
