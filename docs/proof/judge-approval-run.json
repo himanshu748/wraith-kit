@@ -1,0 +1,28 @@
+{
+  "recordedOn": "2026-11-28",
+  "sourceCommit": "df73464ea257d81da50bc12193c00992f8ef0aa4",
+  "mode": "Local Chromium, fictional fixtures, no provider keys",
+  "outcomes": [
+    {
+      "app": "todo-afterlife",
+      "approved": "rewrite",
+      "downloadHttpStatus": 200,
+      "patchHeader": [
+        "--- a/src/payment.ts",
+        "+++ b/src/payment.ts"
+      ],
+      "actionsBeforeReplay": 5,
+      "actionsAfterReplay": 5,
+      "audit": "Chain verified"
+    },
+    {
+      "app": "notice-ghoul",
+      "approvals": 3,
+      "calendarHttpStatus": 200,
+      "calendarEntryCount": 2,
+      "sampleCalendarEntry": "SUMMARY:[DEMO] Library research grant",
+      "digestHttpStatus": 200,
+      "audit": "Chain verified"
+    }
+  ]
+}
