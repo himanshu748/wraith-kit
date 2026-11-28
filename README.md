@@ -2,7 +2,7 @@
 
 **Small agents. Human judgment.** A TypeScript skeleton that turns webhooks and feeds into explainable proposals, asks before consequential actions, and remembers what happened.
 
-**[Download both apps for judging](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-test-build.zip)** · [Release instructions](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Watch the 1:12 walkthrough](https://youtu.be/XldHuxVLAEQ) · [Judge guide](docs/DEVPOST.md) · [Submitted Kiroween entry](https://devpost.com/software/wraith-kit-mrt2yp)
+**[Download both apps for judging](https://github.com/himanshu748/wraith-kit/releases/download/kiroween-2026-test/wraith-kit-kiroween-fixed-build.zip)** · [Release instructions](https://github.com/himanshu748/wraith-kit/releases/tag/kiroween-2026-test) · [Watch the 1:12 walkthrough](https://youtu.be/XldHuxVLAEQ) · [Judge guide](docs/DEVPOST.md) · [Submitted Kiroween entry](https://devpost.com/software/wraith-kit-mrt2yp)
 
 Two working apps demonstrate the same unmodified core:
 
